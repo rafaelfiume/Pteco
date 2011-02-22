@@ -1,9 +1,3 @@
-/*
- * VTable.java
- *
- * Created on 19 de Dezembro de 2006, 18:35
- */
-
 package org.ptolomeu.gui.table;
 
 import java.awt.Color;
@@ -12,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.SoftBevelBorder;
@@ -23,36 +18,37 @@ import javax.swing.table.TableColumn;
 
 import org.jdesktop.application.Action;
 
-/**
- * @author Rafael Fiume.
- */
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
+
 public final class SpreadsheetView extends JPanel {
 
-    /**
-     * Creates new TableView.
-     * 
-     * <strong>ATENÇÃO:</strong> Não utilize esse construtor. O construtor padrão é utilizado apenas
-     * para atender a especificação JavaBean. Dessa forma, o componente pode ser instanciado por
-     * construtores de interface gráficas, como o Matisse.
-     * <p>
-     * 
-     * Utilize sempre o construtor TableView(DataTableModel tableModel), caso contrário o model
-     * dessa vew será null.
-     */
-    public SpreadsheetView() {
-        super();
-        initComponents();
-        // table.putClientProperty(
-        // SubstanceLookAndFeel.WATERMARK_TO_BLEED,
-        // Boolean.FALSE);
-    }
+    private final JScrollPane spTable = new JScrollPane();
+
+    private final JTable table = new JTable();
+
+    private final JTable tableRowHeader = new JTable();
 
     /**
      * Creates a new TableView with the specified DataTableModel.
      */
     public SpreadsheetView(SpreadsheetModel model) {
-        this();
+        initComponents(model);
+        setUpLayout();
+    }
+
+    private void initComponents(SpreadsheetModel model) {
+        tableRowHeader.setModel(new TableRowHeaderModel());
+        tableRowHeader.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        configTableRowHeader();
+
+        table.setRowSelectionAllowed(false);
         table.setModel(model);
+        configTableHeader();
+
+        spTable.setBorder(null);
+        spTable.setRowHeaderView(tableRowHeader);
+        spTable.setViewportView(table);
     }
 
     /**
@@ -65,11 +61,6 @@ public final class SpreadsheetView extends JPanel {
         TableColumnNameDialog.showDialog(table.getTableHeader());
     }
 
-    // Configure the Table ****************************************************
-
-    /*
-     * Configure the table row header.
-     */
     private void configTableRowHeader() {
         final int COL_SIZE = 40;
 
@@ -94,9 +85,6 @@ public final class SpreadsheetView extends JPanel {
         column.setCellRenderer(renderer);
     }
 
-    /*
-     * Configure the table header.
-     */
     private void configTableHeader() {
         final JTableHeader header = table.getTableHeader();
 
@@ -109,63 +97,22 @@ public final class SpreadsheetView extends JPanel {
         header.setDefaultRenderer(new CustomTableCellRenderer(header));
     }
 
-    @SuppressWarnings("LocalVariableCouldBeFinal")
-    // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        tableRowHeader = new javax.swing.JTable();
-        spTable = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
-
-        tableRowHeader.setModel(new TableRowHeaderModel());
-        tableRowHeader.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        // Post-init tableRowHeader code
-        configTableRowHeader();
-        // //////////////////////////////////////////////
-
-        spTable.setBorder(null);
-        // Post-init code. ////////////////////
-        spTable.setRowHeaderView(tableRowHeader);
-        // //////////////////////////////////////////////////
-
-        table.setRowSelectionAllowed(false);
-        // Post-init tableInput code
-        configTableHeader();
-        // ///////////////////////////
-        spTable.setViewportView(table);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(
-                javax.swing.GroupLayout.Alignment.LEADING).addComponent(spTable,
-                javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE));
-        layout.setVerticalGroup(layout.createParallelGroup(
-                javax.swing.GroupLayout.Alignment.LEADING).addComponent(spTable,
-                javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE,
-                486, Short.MAX_VALUE));
-    }// </editor-fold>//GEN-END:initComponents
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane spTable;
-
-    private javax.swing.JTable table;
-
-    private javax.swing.JTable tableRowHeader;
-
-    // End of variables declaration//GEN-END:variables
+    private void setUpLayout() {
+        setLayout(new FormLayout("max(10dlu;default)", "fill:pref:grow"));
+        add(spTable, new CellConstraints().xy(1, 1));
+    }
 
     private static class CustomTableCellRenderer implements TableCellRenderer {
 
         final TableCellRenderer headerRenderer;
 
         public CustomTableCellRenderer(JTableHeader header) {
-            super();
             headerRenderer = header.getDefaultRenderer();
         }
 
         @Override
-        public Component getTableCellRendererComponent(final JTable table, final Object value,
-                final boolean isSelected, final boolean hasFocus, final int row, final int column) {
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
 
             final Component comp = headerRenderer.getTableCellRendererComponent(table, value,
                     isSelected, hasFocus, row, column);
@@ -178,15 +125,15 @@ public final class SpreadsheetView extends JPanel {
 
     private static class TableRowHeaderCellRenderer extends DefaultTableCellRenderer {
 
-        Font font = new java.awt.Font("Lucida Sans", 0, 12);
+        final Font font = new Font("Lucida Sans", 0, 12);
 
-        SoftBevelBorder border = new SoftBevelBorder(SoftBevelBorder.RAISED);
+        final SoftBevelBorder border = new SoftBevelBorder(SoftBevelBorder.RAISED);
 
-        Color backgroundColor = new Color(238, 238, 238);
+        final Color backgroundColor = new Color(238, 238, 238);
 
         @Override
-        public Component getTableCellRendererComponent(final JTable table, final Object value,
-                final boolean isSelected, final boolean hasFocus, final int row, final int column) {
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
 
             setFont(font);
             setBorder(border);

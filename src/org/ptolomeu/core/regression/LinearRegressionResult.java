@@ -12,23 +12,19 @@ package org.ptolomeu.core.regression;
  * @author Rafael Fiume
  */
 public final class LinearRegressionResult extends AbstractRegressionResult {
-    
+
     /** f(x) = a + bx */
     public double coefA;
+
     public double coefB;
-    
+
     public double coefDeCorrelacao;
+
     public double coefDeDeterminacao;
-    
+
     public String toString() {
-        return new StringBuilder("Linear Regression: ")
-        .append(coefA)
-        .append("\t")
-        .append(coefB)
-        .append("\t")
-        .append(coefDeCorrelacao)
-        .append("\t")
-        .append(coefDeDeterminacao)
-        .toString();
-    }   
+        return new StringBuilder("Linear Regression: ").append(coefA).append("\t").append(coefB)
+                .append("\t").append(coefDeCorrelacao).append("\t").append(coefDeDeterminacao)
+                .toString();
+    }
 }

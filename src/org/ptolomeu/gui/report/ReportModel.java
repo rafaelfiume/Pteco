@@ -24,110 +24,103 @@ import org.ptolomeu.core.regression.NonLinearRegressionResult;
 import org.ptolomeu.gui.Reporter;
 
 /**
- *
+ * 
  * @author Rafael Fiume
  */
 public class ReportModel implements Reporter {
-    
-    /** 
-     * The model for the JTextPane in the view. 
+
+    /**
+     * The model for the JTextPane in the view.
      */
     private AbstractDocument doc;
 
-    /** 
-     * Contain formatation style of string output in VReport. 
+    /**
+     * Contain formatation style of string output in VReport.
      */
     private SimpleAttributeSet[] atributes;
 
-    /** 
-     * Format the numbers of string output in VReport. 
+    /**
+     * Format the numbers of string output in VReport.
      */
     private Format format;
 
     public ReportModel() {
         initOutput();
     }
-    
+
     public Document getDocument() {
         return doc;
     }
-    
+
     /**
      * Display the result of the mathematical modeling in the gui.
      */
     public void reportResult(final AbstractRegressionResult result) {
         /*
-         * Implementation note: there must be a way to make this better,
-         * but for now this is just fine.
+         * Implementation note: there must be a way to make this better, but for now this is just
+         * fine.
          */
-        
+
         if (result instanceof LinearRegressionResult) {
             reportResult((LinearRegressionResult) result);
-            
+
         } else if (result instanceof NonLinearRegressionResult) {
             reportResult((NonLinearRegressionResult) result);
         }
     }
 
     /**
-     * Display the result of the mathematical modeling in the gui.
-     * The output is like f(x) = a + bx,
+     * Display the result of the mathematical modeling in the gui. The output is like f(x) = a + bx,
      * plus correlation and determination coefficients.
      * 
      * If param result is null, #reportResult do nothing.
      */
     @Override
     public void reportResult(final LinearRegressionResult result) {
-        if (result == null) {            
+        if (result == null) {
             return;
         }
-        
+
         clear();
 
         try {
             String[] resultCoefficients = new String[2];
-            resultCoefficients[0]       = format.format(result.coefA);
-            resultCoefficients[1]       = format.format(result.coefB);
+            resultCoefficients[0] = format.format(result.coefA);
+            resultCoefficients[1] = format.format(result.coefB);
 
-            final String correlation    = format.format(result.coefDeCorrelacao);
-            final String determination  = format.format(
-                    result.coefDeDeterminacao * 100);
-
+            final String correlation = format.format(result.coefDeCorrelacao);
+            final String determination = format.format(result.coefDeDeterminacao * 100);
 
             /****************** LINEAR FUNCTION: f(x) = a + bx ****************/
-            final String linearRegression  = "Linear Regression:";
+            final String linearRegression = "Linear Regression:";
             final String f_openParenthesis = "\nf(";
-            final String closeParenthesis  = ") = ";
-            final String varX              = "x";
+            final String closeParenthesis = ") = ";
+            final String varX = "x";
 
             doc.insertString(doc.getLength(), linearRegression, atributes[0]);
             doc.insertString(doc.getLength(), f_openParenthesis,
-                    result.coefDeDeterminacao >= 0.80 ?
-                        atributes[1] : atributes[4]);
+                    result.coefDeDeterminacao >= 0.80 ? atributes[1] : atributes[4]);
 
             doc.insertString(doc.getLength(), varX, atributes[2]);
             doc.insertString(doc.getLength(), closeParenthesis,
-                    result.coefDeDeterminacao >= 0.80 ?
-                        atributes[1] : atributes[4]);
+                    result.coefDeDeterminacao >= 0.80 ? atributes[1] : atributes[4]);
 
             doc.insertString(doc.getLength(), resultCoefficients[0], atributes[3]);
             doc.insertString(doc.getLength(), resultCoefficients[1], atributes[3]);
             doc.insertString(doc.getLength(), varX, atributes[2]);
 
-            /********************** LINEAR COEFFICIENT:  **********************/
-            
-            final String coefCorrel  = "\nCorrelation Coefficient: ";
-            final String coefDeterm  = "\nDetermination Coefficient: ";
+            /********************** LINEAR COEFFICIENT: **********************/
+
+            final String coefCorrel = "\nCorrelation Coefficient: ";
+            final String coefDeterm = "\nDetermination Coefficient: ";
             final String porcentagem = " % ";
 
             doc.insertString(doc.getLength(), coefCorrel,
-                    result.coefDeDeterminacao >= 0.80 ?
-                        atributes[1] : atributes[4]);
+                    result.coefDeDeterminacao >= 0.80 ? atributes[1] : atributes[4]);
 
             doc.insertString(doc.getLength(), correlation, atributes[3]);
             doc.insertString(doc.getLength(), coefDeterm,
-                    result.coefDeDeterminacao >= 0.80 ?
-                        atributes[1] : atributes[4]);
+                    result.coefDeDeterminacao >= 0.80 ? atributes[1] : atributes[4]);
 
             doc.insertString(doc.getLength(), determination, atributes[3]);
             doc.insertString(doc.getLength(), porcentagem, atributes[5]);
@@ -136,28 +129,24 @@ public class ReportModel implements Reporter {
 
             doc.insertString(doc.getLength(), SEPARATOR, atributes[0]);
 
-        } catch(BadLocationException ble) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Error",
-                    ble.getMessage(),
+        } catch (BadLocationException ble) {
+            JOptionPane.showMessageDialog(null, "Error", ble.getMessage(),
                     JOptionPane.ERROR_MESSAGE);
         }
     }
 
     /**
-     * Display the result of the mathematical modeling in the gui.
-     * The output is like f(x) = a + bx + cx2, plus correlation and determination
-     * coefficients.
+     * Display the result of the mathematical modeling in the gui. The output is like f(x) = a + bx
+     * + cx2, plus correlation and determination coefficients.
      * 
      * If param result is null, #reportResult do nothing.
      */
     @Override
     public void reportResult(final NonLinearRegressionResult result) {
-        if (result == null) {            
+        if (result == null) {
             return;
         }
-        
+
         clear();
 
         try {
@@ -167,12 +156,12 @@ public class ReportModel implements Reporter {
             resultCoefficients[2] = format.format(result.coefC);
 
             /************ Non-Linear Function: f(x) = a + bx + cx2 ************/
-            
+
             final String nonLinearRegression = "Non-Linear Function:";
-            final String f_openParenthesis   = "\nf(";
-            final String closeParenthesis    = ") = ";
-            final String varX                = "x";
-            final String square              = "2";
+            final String f_openParenthesis = "\nf(";
+            final String closeParenthesis = ") = ";
+            final String varX = "x";
+            final String square = "2";
 
             doc.insertString(doc.getLength(), nonLinearRegression, atributes[0]);
             doc.insertString(doc.getLength(), f_openParenthesis, atributes[5]);
@@ -180,7 +169,7 @@ public class ReportModel implements Reporter {
             doc.insertString(doc.getLength(), closeParenthesis, atributes[5]);
             doc.insertString(doc.getLength(), resultCoefficients[0], atributes[3]);
             doc.insertString(doc.getLength(), resultCoefficients[1], atributes[3]);
-            doc.insertString(doc.getLength(), varX, atributes[ 2 ]);
+            doc.insertString(doc.getLength(), varX, atributes[2]);
             doc.insertString(doc.getLength(), resultCoefficients[2], atributes[3]);
             doc.insertString(doc.getLength(), varX, atributes[2]);
             doc.insertString(doc.getLength(), square, atributes[5]);
@@ -188,31 +177,25 @@ public class ReportModel implements Reporter {
 
             doc.insertString(doc.getLength(), SEPARATOR, atributes[0]);
 
-        } catch(BadLocationException ble) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Error",
-                    ble.getMessage(),
+        } catch (BadLocationException ble) {
+            JOptionPane.showMessageDialog(null, "Error", ble.getMessage(),
                     JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    /** 
-     * Clear the VReport component. 
+    /**
+     * Clear the VReport component.
      */
     public void clear() {
         try {
             doc.remove(0, doc.getLength());
 
-        } catch(BadLocationException ble) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Error",
-                    ble.getMessage(),
+        } catch (BadLocationException ble) {
+            JOptionPane.showMessageDialog(null, "Error", ble.getMessage(),
                     JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void initOutput() {
         doc = new DefaultStyledDocument();
         atributes = initAttributes();
@@ -246,7 +229,7 @@ public class ReportModel implements Reporter {
 
         return attrs;
     }
-    
+
     private Format initFormat() {
         DecimalFormat decimalFormat = new DecimalFormat();
         decimalFormat.setNegativePrefix(" - ");

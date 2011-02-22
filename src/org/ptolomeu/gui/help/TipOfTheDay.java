@@ -1,9 +1,3 @@
-/*
- * TipOfTheDay.java
- *
- * Created on 29 de Janeiro de 2007, 15:52
- */
-
 package org.ptolomeu.gui.help;
 
 import java.awt.Component;

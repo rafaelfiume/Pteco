@@ -16,12 +16,12 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * @author Rafael Fiume
  */
 public class XYIndex implements Comparable<XYIndex> {
-    
+
     /**
      * The row index.
      */
     private int row;
-    
+
     /**
      * The column index.
      */
@@ -31,29 +31,24 @@ public class XYIndex implements Comparable<XYIndex> {
         this.row = row;
         this.column = column;
     }
-    
+
     public int getRow() {
         return row;
     }
-    
+
     public int getColumn() {
         return column;
     }
 
     @Override
     public int compareTo(final XYIndex other) {
-        return new CompareToBuilder()
-                    .append(row, other.row)
-                    .append(column, other.column)
-                    .toComparison();
+        return new CompareToBuilder().append(row, other.row).append(column, other.column)
+                .toComparison();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(-1585598641, -261858049)
-                    .append(row)
-                    .append(column)
-                    .toHashCode();
+        return new HashCodeBuilder(-1585598641, -261858049).append(row).append(column).toHashCode();
     }
 
     @Override
@@ -65,9 +60,7 @@ public class XYIndex implements Comparable<XYIndex> {
             return false;
         }
         final XYIndex castOther = (XYIndex) other;
-        return new EqualsBuilder()
-                    .append(row, castOther.row)
-                    .append(column, castOther.column)
-                    .isEquals();
+        return new EqualsBuilder().append(row, castOther.row).append(column, castOther.column)
+                .isEquals();
     }
 }

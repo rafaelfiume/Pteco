@@ -14,9 +14,8 @@ import java.util.Map;
 import org.ptolomeu.core.regression.exception.CoordinateNumberException;
 import org.ptolomeu.core.regression.exception.InsufficientDataException;
 
-
 /**
- *
+ * 
  * @author Rafael Fiume
  */
 public abstract class AbstractRegression {
@@ -27,11 +26,9 @@ public abstract class AbstractRegression {
 
     protected int MIN_COORD = 3;
 
-    public abstract AbstractRegressionResult doRegression(
-                Map<XYIndex, Double> coordValues)
-                throws InsufficientDataException, CoordinateNumberException;
+    public abstract AbstractRegressionResult doRegression(Map<XYIndex, Double> coordValues)
+            throws InsufficientDataException, CoordinateNumberException;
 
-    @SuppressWarnings("LooseCoupling")
     protected double sumX(final Map<XYIndex, Double> coordValues) {
         double somaDeX = 0.0;
 
@@ -56,8 +53,7 @@ public abstract class AbstractRegression {
         return somaDeY;
     }
 
-    protected double sumXY(final Map<XYIndex, Double> coordValues)
-                                        throws CoordinateNumberException {
+    protected double sumXY(final Map<XYIndex, Double> coordValues) throws CoordinateNumberException {
         int numCoordX = 0;
         int numCoordY = 0;
         double somaDeMultDeXY = 0.0;
@@ -98,7 +94,7 @@ public abstract class AbstractRegression {
 
         for (XYIndex coord : coordValues.keySet()) {
 
-            if ( coord.getColumn() == 0 ) {
+            if (coord.getColumn() == 0) {
                 Double dX2 = coordValues.get(coord);
                 somaDeX2 += Math.pow(dX2.doubleValue(), 2);
             }
@@ -180,4 +176,3 @@ public abstract class AbstractRegression {
     }
 
 }
-

@@ -24,12 +24,12 @@ import org.ptolomeu.core.regression.XYIndex;
  * @author Rafael Fiume
  */
 public class SpreadsheetModel implements TableModel, Serializable {
-    
+
     /**
      * O valor das coordenadas (x, y) inseridas pelo usuário na tabela.
      */
     private Map<XYIndex, Double> coordValues = new TreeMap<XYIndex, Double>();
-    
+
     private static final int NUM_ROW = 5000;
 
     private int maxRow = 0;
@@ -41,25 +41,25 @@ public class SpreadsheetModel implements TableModel, Serializable {
     private final Class[] classType;
 
     private final boolean[] isEditable;
-    
+
     private final EventListenerList listeners = new EventListenerList();
 
     public SpreadsheetModel() {
         super();
-        columnName  = load_TableColumnNames();
-        num_Column  = columnName.length;
-        classType   = load_TableColumnTypes();
-        isEditable  = load_TableColumnIsEditable();
+        columnName = load_TableColumnNames();
+        num_Column = columnName.length;
+        classType = load_TableColumnTypes();
+        isEditable = load_TableColumnIsEditable();
     }
-    
-    //  Actions ***************************************************************
 
-    /** 
-     * Clear the table. 
+    // Actions ***************************************************************
+
+    /**
+     * Clear the table.
      */
     public void clear() {
-        for(int r = 0; r <= maxRow; r++) {
-            for(int c = 0; c < num_Column; c++)  {
+        for (int r = 0; r <= maxRow; r++) {
+            for (int c = 0; c < num_Column; c++) {
                 setValueAt(null, r, c);
             }
         }
@@ -67,7 +67,7 @@ public class SpreadsheetModel implements TableModel, Serializable {
     }
 
     // Implementing TableModel ***********************************************
-    
+
     @Override
     public int getRowCount() {
         return NUM_ROW;
@@ -89,7 +89,7 @@ public class SpreadsheetModel implements TableModel, Serializable {
     }
 
     @Override
-    public boolean isCellEditable(final int rowIndex, final int columnIndex ) {
+    public boolean isCellEditable(final int rowIndex, final int columnIndex) {
         return isEditable[columnIndex];
     }
 
@@ -98,10 +98,9 @@ public class SpreadsheetModel implements TableModel, Serializable {
         return coordValues.get(new XYIndex(rowIndex, columnIndex));
     }
 
-    @SuppressWarnings("NullAssignment")
     @Override
     public void setValueAt(Object aValue, final int rowIndex, int columnIndex) {
-        if(aValue == null) {
+        if (aValue == null) {
             coordValues.remove(new XYIndex(rowIndex, columnIndex));
             return;
         }
@@ -111,8 +110,8 @@ public class SpreadsheetModel implements TableModel, Serializable {
         fireTableCellUpdated(rowIndex, columnIndex);
     }
 
-//
-//  Managing Listeners
+    //
+    // Managing Listeners
 
     @Override
     public void addTableModelListener(final TableModelListener l) {
@@ -137,43 +136,34 @@ public class SpreadsheetModel implements TableModel, Serializable {
             }
         }
     }
-    
+
     // Helper methods *********************************************************
-    
+
     private String[] load_TableColumnNames() {
-        return new String[] {
-            "Coordinate X",
-            "Coordinate Y",
-        };
+        return new String[] { "Coord X", "Coord Y", };
     }
 
     private Class<?>[] load_TableColumnTypes() {
-        return new Class[] {
-            Double.class,
-            Double.class,
-        };
+        return new Class[] { Double.class, Double.class, };
     }
 
     private boolean[] load_TableColumnIsEditable() {
-        return new boolean[] {
-            true,
-            true,
-        };
+        return new boolean[] { true, true, };
     }
-    
+
     // Others helpful methods
-    
+
     /**
-     * Retorna o valor das coordenadas em modo somente leitura. 
+     * Retorna o valor das coordenadas em modo somente leitura.
      */
     public Map<XYIndex, Double> getCoordValues() {
         return Collections.unmodifiableMap(coordValues);
     }
-    
+
     public SpreadsheetModel copy() {
-    	SpreadsheetModel spreadsheetModel = new SpreadsheetModel();
-    	spreadsheetModel.coordValues = Collections.unmodifiableMap(coordValues);
-    	return spreadsheetModel;
+        SpreadsheetModel spreadsheetModel = new SpreadsheetModel();
+        spreadsheetModel.coordValues = Collections.unmodifiableMap(coordValues);
+        return spreadsheetModel;
     }
-    
+
 }

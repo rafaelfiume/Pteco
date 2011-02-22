@@ -6,175 +6,145 @@
 
 package org.ptolomeu.gui.table;
 
+import java.awt.Component;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.table.JTableHeader;
+
+import com.jgoodies.forms.builder.ButtonBarBuilder2;
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 /**
  * Dialog to change the name of table's columns.
  * 
  * TODO: Make this dialog request focus when it appears.
- *
+ * 
  * @author Rafael Fiume
  */
 public class TableColumnNameDialog extends javax.swing.JDialog {
 
-    private final JTableHeader tableHeader;
-    
     private static TableColumnNameDialog _instance;
+
+    private final JTableHeader tableHeader;
+
+    private JLabel lCoordX = new JLabel();
+
+    private JLabel lCoordY = new JLabel();
+
+    private JTextField tfCoordX = new JTextField();
+
+    private JTextField tfCoordY = new JTextField();
+
+    private JButton bCancel = new JButton();
+
+    private JButton bOk = new JButton();
 
     private TableColumnNameDialog(JTableHeader tableHeader) {
         super((Frame) null, true);
         this.tableHeader = tableHeader;
         initComponents();
+        setUpLayout();
     }
-    
+
     /**
      * Lazily construct the TableColumnNameDialog.
      */
     public synchronized static void showDialog(JTableHeader tableHeader) {
         if (_instance == null) {
-            _instance = new TableColumnNameDialog(tableHeader);            
+            _instance = new TableColumnNameDialog(tableHeader);
         }
         _instance.setVisible(true);
     }
 
-    @SuppressWarnings("LocalVariableCouldBeFinal")
-    // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        lCoordX = new javax.swing.JLabel();
-        tfCoordX = new javax.swing.JTextField();
-        lCoordY = new javax.swing.JLabel();
-        tfCoordY = new javax.swing.JTextField();
-        bCancel = new javax.swing.JButton();
-        bOk = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit Column Name");
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         lCoordX.setText("Coord. X:");
-
         lCoordY.setText("Coord. Y:");
 
-        bCancel.setText("Cancel");
-        bCancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bCancelActionPerformed(evt);
-            }
-        });
-
         bOk.setText("Ok");
-        bOk.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bOk.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent evt) {
                 bOkActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lCoordX)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfCoordX, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lCoordY)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfCoordY, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(bCancel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bOk, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
+        bCancel.setText("Cancel");
+        bCancel.addActionListener(new ActionListener() {
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bCancel, bOk});
+            public void actionPerformed(ActionEvent evt) {
+                bCancelActionPerformed(evt);
+            }
+        });
+    }
 
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lCoordX)
-                    .addComponent(tfCoordX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lCoordY)
-                    .addComponent(tfCoordY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bCancel)
-                    .addComponent(bOk))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+    private void setUpLayout() {
+        getContentPane().setLayout(
+                new FormLayout("4dlu, right:pref, 4dlu, 100dlu, 4dlu, min",
+                        "2dlu, pref, 2dlu, pref, 6dlu, pref"));
 
+        final CellConstraints cc = new CellConstraints();
+        add(lCoordX, cc.xy(2, 2));
+        add(tfCoordX, cc.xy(4, 2));
+
+        add(lCoordY, cc.xy(2, 4));
+        add(tfCoordY, cc.xy(4, 4));
+
+        add(buildButtonBar(), cc.xyw(2, 6, 4));
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    @SuppressWarnings("MethodArgumentCouldBeFinal")
-    private void bOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bOkActionPerformed
+    private void bOkActionPerformed(ActionEvent evt) {
         boolean success = changeColumnName();
         if (success) {
             clearFields();
-            dispose();             
+            dispose();
         }
-    }//GEN-LAST:event_bOkActionPerformed
+    }
 
-    @SuppressWarnings("MethodArgumentCouldBeFinal")
-    private void bCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelActionPerformed
+    private void bCancelActionPerformed(ActionEvent evt) {
         clearFields();
         dispose();
-    }//GEN-LAST:event_bCancelActionPerformed
+    }
 
-    /**
-     * Clears the field of this dialog.
-     */
     private void clearFields() {
         tfCoordX.setText("");
         tfCoordY.setText("");
     }
 
-    /**
-     * Change the column's name of the Spreadsheet object.
-     */ 
-    private boolean changeColumnName() {        
+    private boolean changeColumnName() {
         final String[] columnName = new String[2];
         columnName[0] = tfCoordX.getText();
         columnName[1] = tfCoordY.getText();
 
-        if ((columnName[0].compareTo("") == 0) ||
-                (columnName[1].compareTo("") == 0)) {
+        if ((columnName[0].compareTo("") == 0) || (columnName[1].compareTo("") == 0)) {
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Type the name of the columns.",
-                    "OPS!",
+            JOptionPane.showMessageDialog(this, "Type the name of the columns.", "OPS!",
                     JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
 
         for (int i = 0; i < columnName.length; i++) {
-            tableHeader.getColumnModel()
-                        .getColumn(i)
-                        .setHeaderValue(columnName[i]);
-            
+            tableHeader.getColumnModel().getColumn(i).setHeaderValue(columnName[i]);
+
         }
         return true;
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bCancel;
-    private javax.swing.JButton bOk;
-    private javax.swing.JLabel lCoordX;
-    private javax.swing.JLabel lCoordY;
-    private javax.swing.JTextField tfCoordX;
-    private javax.swing.JTextField tfCoordY;
-    // End of variables declaration//GEN-END:variables
+    private Component buildButtonBar() {
+        return new ButtonBarBuilder2().addGlue().addButton(bOk).addRelatedGap().addButton(bCancel)
+                .addRelatedGap().getPanel();
+    }
 
 }
