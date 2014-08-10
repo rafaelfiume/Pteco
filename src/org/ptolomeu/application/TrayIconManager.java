@@ -56,7 +56,7 @@ public class TrayIconManager {
         if (SystemTray.isSupported()) {
             systemTray = SystemTray.getSystemTray();
             icon = Toolkit.getDefaultToolkit().getImage(
-                    TrayIconManager.class.getResource("/org/ptolomeu/gui/resources/md1.gif"));
+                    TrayIconManager.class.getResource("/org/ptolomeu/gui/resources/run.gif"));
 
             popup = new PopupMenu();
             trayIcon = new TrayIcon(icon, "Double-click to maximize/minimize the software", popup);
