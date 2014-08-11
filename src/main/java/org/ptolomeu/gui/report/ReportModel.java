@@ -3,7 +3,6 @@
  * 
  * Created on 14/07/2007, 23:00:43
  */
-
 package org.ptolomeu.gui.report;
 
 import java.awt.Color;
@@ -23,29 +22,24 @@ import org.ptolomeu.core.regression.LinearRegressionResult;
 import org.ptolomeu.core.regression.NonLinearRegressionResult;
 import org.ptolomeu.gui.Reporter;
 
-/**
- * 
- * @author Rafael Fiume
- */
 public class ReportModel implements Reporter {
 
     /**
      * The model for the JTextPane in the view.
      */
-    private AbstractDocument doc;
+    private final AbstractDocument doc;
 
     /**
-     * Contain formatation style of string output in VReport.
+     * Formatting style of for ReportView.
      */
-    private SimpleAttributeSet[] atributes;
+    private final SimpleAttributeSet[] atributes;
 
-    /**
-     * Format the numbers of string output in VReport.
-     */
-    private Format format;
+    private final Format format;
 
     public ReportModel() {
-        initOutput();
+        this.doc = new DefaultStyledDocument();
+        this.atributes = initAttributes();
+        this.format = initFormat();
     }
 
     public Document getDocument() {
@@ -56,11 +50,6 @@ public class ReportModel implements Reporter {
      * Display the result of the mathematical modeling in the gui.
      */
     public void reportResult(final AbstractRegressionResult result) {
-        /*
-         * Implementation note: there must be a way to make this better, but for now this is just
-         * fine.
-         */
-
         if (result instanceof LinearRegressionResult) {
             reportResult((LinearRegressionResult) result);
 
@@ -177,9 +166,8 @@ public class ReportModel implements Reporter {
 
             doc.insertString(doc.getLength(), SEPARATOR, atributes[0]);
 
-        } catch (BadLocationException ble) {
-            JOptionPane.showMessageDialog(null, "Error", ble.getMessage(),
-                    JOptionPane.ERROR_MESSAGE);
+        } catch (BadLocationException e) {
+            JOptionPane.showMessageDialog(null, "Error", e.getMessage(), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -194,12 +182,6 @@ public class ReportModel implements Reporter {
             JOptionPane.showMessageDialog(null, "Error", ble.getMessage(),
                     JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    private void initOutput() {
-        doc = new DefaultStyledDocument();
-        atributes = initAttributes();
-        format = initFormat();
     }
 
     private SimpleAttributeSet[] initAttributes() {

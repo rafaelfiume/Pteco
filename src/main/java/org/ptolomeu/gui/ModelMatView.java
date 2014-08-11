@@ -7,6 +7,7 @@ import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -14,22 +15,24 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.FrameView;
 import org.jdesktop.swingx.JXStatusBar;
 import org.ptolomeu.application.ModelMatApplication;
 import org.ptolomeu.core.regression.AbstractRegression.RegressionType;
-import org.ptolomeu.gui.action.ShowAboutDialog;
-import org.ptolomeu.gui.action.ShowNotYetImplementedMessage;
-import org.ptolomeu.gui.action.ShowTipOfTheDay;
+import org.ptolomeu.gui.actions.ShowAboutDialogAction;
+import org.ptolomeu.gui.actions.ShowNotYetImplementedMessageAction;
+import org.ptolomeu.gui.actions.ShowTipOfTheDayAction;
 import org.ptolomeu.gui.chart.ChartView;
 import org.ptolomeu.gui.report.ReportView;
 import org.ptolomeu.gui.table.SpreadsheetView;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+
+import static javax.swing.SwingConstants.BOTTOM;
+import static javax.swing.SwingConstants.CENTER;
 
 public class ModelMatView extends FrameView {
 
@@ -54,7 +57,6 @@ public class ModelMatView extends FrameView {
     private final JMenu mSheet = new JMenu();
 
     private final JMenuItem mhAbout = new JMenuItem();
-    private final JSeparator mhSeparator1 = new JSeparator();
     private final JMenuItem mhTipOfTheDay = new JMenuItem();
     private final JMenuItem miEditColumnName = new JMenuItem();
     private final JMenuItem miExit = new JMenuItem();
@@ -64,6 +66,7 @@ public class ModelMatView extends FrameView {
     private final JMenuItem miPrint = new JMenuItem();
     private final JMenuItem miSave = new JMenuItem();
 
+    private final JSeparator mhSeparator1 = new JSeparator();
     private final JSeparator miSeparator1 = new JSeparator();
     private final JSeparator miSeparator2 = new JSeparator();
 
@@ -77,24 +80,23 @@ public class ModelMatView extends FrameView {
     private final JPanel mainPanel = new JPanel();
 
     private final ReportView reportView = new ReportView(applicationModel.getReportModel());
-
     private final SpreadsheetView spreadsheet = new SpreadsheetView(applicationModel.getSpreadsheetModel());
-
     private final ChartView chartView = new ChartView(applicationModel.getChartModel());
 
     private final JXStatusBar statusBar = new JXStatusBar();
+    private final JLabel statusLabel = new JLabel();
 
     public ModelMatView(Application application) {
         super(application);
         initComponents();
+        setUpLayout();
+        assembleView();
     }
 
     private void initComponents() {
         setUpMenu();
         setUpToolbar();
         setUpStatusBar();
-        setUpLayout();
-        assembleView();
     }
 
     private void setUpLayout() {
@@ -126,73 +128,64 @@ public class ModelMatView extends FrameView {
         toolBar.setFloatable(false);
         toolBar.setRollover(true);
 
-        bOpenFile
-                .setAction(new ShowNotYetImplementedMessage("Open File",
-                        "/icons/Open16.gif",
-                        "/icons/Open24.gif"));
+        bOpenFile.setAction(new ShowNotYetImplementedMessageAction("Open File", "/icons/Open16.gif", "/icons/Open24.gif"));
         bOpenFile.setText(null);
         bOpenFile.setFocusable(false);
-        bOpenFile.setHorizontalTextPosition(SwingConstants.CENTER);
-        bOpenFile.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bOpenFile.setHorizontalTextPosition(CENTER);
+        bOpenFile.setVerticalTextPosition(BOTTOM);
 
-        bImport.setAction(new ShowNotYetImplementedMessage("Import File",
-                "/icons/Import16.gif",
-                "/icons/Import24.gif"));
+        bImport.setAction(new ShowNotYetImplementedMessageAction("Import File", "/icons/Import16.gif", "/icons/Import24.gif"));
         bImport.setText(null);
         bImport.setFocusable(false);
-        bImport.setHorizontalTextPosition(SwingConstants.CENTER);
-        bImport.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bImport.setHorizontalTextPosition(CENTER);
+        bImport.setVerticalTextPosition(BOTTOM);
 
-        bExport.setAction(new ShowNotYetImplementedMessage("Export File",
-                "/icons/Export16.gif",
-                "/icons/Export24.gif"));
+        bExport.setAction(new ShowNotYetImplementedMessageAction("Export File", "/icons/Export16.gif", "/icons/Export24.gif"));
         bExport.setText(null);
         bExport.setFocusable(false);
-        bExport.setHorizontalTextPosition(SwingConstants.CENTER);
-        bExport.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bExport.setHorizontalTextPosition(CENTER);
+        bExport.setVerticalTextPosition(BOTTOM);
 
-        bSave.setAction(new ShowNotYetImplementedMessage("Save",
-                "/icons/Save16.gif", "/icons/Save24.gif"));
+        bSave.setAction(new ShowNotYetImplementedMessageAction("Save", "/icons/Save16.gif", "/icons/Save24.gif"));
         bSave.setText(null);
         bSave.setFocusable(false);
-        bSave.setHorizontalTextPosition(SwingConstants.CENTER);
-        bSave.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bSave.setHorizontalTextPosition(CENTER);
+        bSave.setVerticalTextPosition(BOTTOM);
 
         bPrint.setText(null);
         bPrint.setFocusable(false);
-        bPrint.setHorizontalTextPosition(SwingConstants.CENTER);
-        bPrint.setVerticalTextPosition(SwingConstants.BOTTOM);
-        bPrint.setAction(new ShowNotYetImplementedMessage("Print",
-                "/icons/Print16.gif",
-                "/icons/Print24.gif"));
+        bPrint.setHorizontalTextPosition(CENTER);
+        bPrint.setVerticalTextPosition(BOTTOM);
+        bPrint.setAction(new ShowNotYetImplementedMessageAction("Print", "/icons/Print16.gif", "/icons/Print24.gif"));
         bPrint.setText(null);
 
         bEdit.setFocusable(false);
-        bEdit.setHorizontalTextPosition(SwingConstants.CENTER);
-        bEdit.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bEdit.setHorizontalTextPosition(CENTER);
+        bEdit.setVerticalTextPosition(BOTTOM);
         bEdit.setAction(getAction(SpreadsheetView.class, spreadsheet, "changeColumnName"));
+        bEdit.setText(null);
 
         bRun.setFocusable(false);
-        bRun.setHorizontalTextPosition(SwingConstants.CENTER);
-        bRun.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bRun.setHorizontalTextPosition(CENTER);
+        bRun.setVerticalTextPosition(BOTTOM);
         bRun.setAction(getAction(ApplicationModel.class, applicationModel, "doRegression"));
 
         bClear.setFocusable(false);
-        bClear.setHorizontalTextPosition(SwingConstants.CENTER);
-        bClear.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bClear.setHorizontalTextPosition(CENTER);
+        bClear.setVerticalTextPosition(BOTTOM);
         bClear.setAction(getAction(ApplicationModel.class, applicationModel, "clear"));
 
-        bShowTip.setAction(new ShowTipOfTheDay());
+        bShowTip.setAction(new ShowTipOfTheDayAction());
         bShowTip.setText(null);
         bShowTip.setFocusable(false);
-        bShowTip.setHorizontalTextPosition(SwingConstants.CENTER);
-        bShowTip.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bShowTip.setHorizontalTextPosition(CENTER);
+        bShowTip.setVerticalTextPosition(BOTTOM);
 
-        bShowAbout.setAction(new ShowAboutDialog());
+        bShowAbout.setAction(new ShowAboutDialogAction());
         bShowAbout.setText(null);
         bShowAbout.setFocusable(false);
-        bShowAbout.setHorizontalTextPosition(SwingConstants.CENTER);
-        bShowAbout.setVerticalTextPosition(SwingConstants.BOTTOM);
+        bShowAbout.setHorizontalTextPosition(CENTER);
+        bShowAbout.setVerticalTextPosition(BOTTOM);
 
         toolBar.add(bOpenFile);
         toolBar.add(bImport);
@@ -210,31 +203,22 @@ public class ModelMatView extends FrameView {
     }
 
     private void setUpStatusBar() {
-//        statusBar.setText("Pteco");
+        statusLabel.setText("Pteco");
+        JXStatusBar.Constraint c1 = new JXStatusBar.Constraint();
+        c1.setFixedWidth(100);
+        statusBar.add(statusLabel, c1);
     }
 
     private void initFileMenu() {
-        miOpen.setAction(new ShowNotYetImplementedMessage("Open File",
-                "/icons/Open16.gif", "/icons/Open24.gif"));
+        miOpen.setAction(new ShowNotYetImplementedMessageAction("Open File", "/icons/Open16.gif", "/icons/Open24.gif"));
+        miImport.setAction(new ShowNotYetImplementedMessageAction("Import File", "/icons/Import16.gif", "/icons/Import24.gif"));
+        miExport.setAction(new ShowNotYetImplementedMessageAction("Export File", "/icons/Export16.gif", "/icons/Export24.gif"));
+        miSave.setAction(new ShowNotYetImplementedMessageAction("Save", "/icons/Save16.gif", "/icons/Save24.gif"));
 
-        miImport.setAction(new ShowNotYetImplementedMessage("Import File",
-                "/icons/Import16.gif",
-                "/icons/Import24.gif"));
-
-        miExport.setAction(new ShowNotYetImplementedMessage("Export File",
-                "/icons/Export16.gif",
-                "/icons/Export24.gif"));
-
-        miSave.setAction(new ShowNotYetImplementedMessage("Save",
-                "/icons/Save16.gif", "/icons/Save24.gif"));
-
-        miExit.setIcon(new ImageIcon(getClass().getResource(
-                "/icons/Exit16.gif")));
+        miExit.setIcon(new ImageIcon(getClass().getResource("/icons/Exit16.gif")));
         miExit.setText("Exit");
 
-        miPrint.setAction(new ShowNotYetImplementedMessage("Print",
-                "/icons/Print16.gif",
-                "/icons/Print24.gif"));
+        miPrint.setAction(new ShowNotYetImplementedMessageAction("Print", "/icons/Print16.gif", "/icons/Print24.gif"));
 
         mFile.setText("File");
         mFile.add(miOpen);
@@ -249,7 +233,8 @@ public class ModelMatView extends FrameView {
     }
 
     private void initSheetMenu() {
-        mSheet.setText("Sheet");
+        mSheet.setText("Spreadsheet");
+        miEditColumnName.setAction(getAction(SpreadsheetView.class, spreadsheet, "changeColumnName"));
         mSheet.add(miEditColumnName);
         menuBar.add(mSheet);
     }
@@ -281,8 +266,8 @@ public class ModelMatView extends FrameView {
     }
 
     private void initHelpMenu() {
-        mhTipOfTheDay.setAction(new ShowTipOfTheDay());
-        mhAbout.setAction(new ShowAboutDialog());
+        mhTipOfTheDay.setAction(new ShowTipOfTheDayAction());
+        mhAbout.setAction(new ShowAboutDialogAction());
 
         mHelp.setText("Help");
         mHelp.add(mhTipOfTheDay);
@@ -305,8 +290,7 @@ public class ModelMatView extends FrameView {
      * @see https://appframework.dev.java.net/intro/index.html
      */
     private Action getAction(Class actionsClass, Object actionsObject, String actionName) {
-        return ModelMatApplication.getApplication().getContext()
-                .getActionMap(actionsClass, actionsObject).get(actionName);
+        return ModelMatApplication.getApplication().getContext().getActionMap(actionsClass, actionsObject).get(actionName);
     }
 
 }

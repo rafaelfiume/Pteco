@@ -1,9 +1,6 @@
 /*
- * MainViewModel.java
- * 
  * Created on 15/07/2007, 06:21:13
  */
-
 package org.ptolomeu.gui;
 
 import org.jdesktop.application.Action;
@@ -19,27 +16,23 @@ import org.ptolomeu.gui.report.ReportModel;
 import org.ptolomeu.gui.table.SpreadsheetModel;
 
 /**
- * The Presentation Model of ModelMatView. Software's action's is here.
- * 
- * @author Rafael Fiume
+ * <a href="http://martinfowler.com/eaaDev/PresentationModel.html">Presentation Model</a> for ModelMatView.
  */
 public class ApplicationModel {
 
-    // TODO: Can I make the models of views final ?
+    private final SpreadsheetModel spreadsheetModel = new SpreadsheetModel();
 
-    private SpreadsheetModel spreadsheetModel = new SpreadsheetModel();
+    private final ReportModel reportModel = new ReportModel();
 
-    private ReportModel reportModel = new ReportModel();
-
-    private ChartModel chartModel = new ChartModel();
+    private final ChartModel chartModel = new ChartModel();
 
     /**
-     * The selected operation by the user in the main menu.
+     * The regression selected by the user.
      */
-    private volatile RegressionType selectedRegressionType;
+    private RegressionType selectedRegressionType;
 
     public ApplicationModel(RegressionType regressionType) {
-        selectedRegressionType = regressionType;
+        this.selectedRegressionType = regressionType;
     }
 
     @Action(block = Task.BlockingScope.ACTION)
@@ -54,37 +47,27 @@ public class ApplicationModel {
         chartModel.clear();
     }
 
-    /**
-     * Returns the the Spreedsheet model.
-     */
     public SpreadsheetModel getSpreadsheetModel() {
         return spreadsheetModel;
     }
 
-    /**
-     * Returns the the ReportView's model.
-     */
     public ReportModel getReportModel() {
         return reportModel;
     }
 
-    /**
-     * Returns the the ReportView's model.
-     */
     public ChartModel getChartModel() {
         return chartModel;
     }
 
     /**
-     * Sets the the linear gression type (currently, linear or non-linear).
+     * Sets the the linear regression type (currently, linear or non-linear).
      */
     public void setSelectedRegressionType(RegressionType selectedRegressionType) {
         this.selectedRegressionType = selectedRegressionType;
     }
 
-    /**
-     * Computes linear ou non-linear regression, depending on the selectedRegressionType property,
-     * in the background.
+    /*
+     * Computes in background linear or non-linear regression, depending on #selectedRegressionType.
      */
     private class DoRegression extends Task<AbstractRegressionResult, Void> {
 
@@ -92,9 +75,9 @@ public class ApplicationModel {
             super(ModelMatApplication.getApplication());
         }
 
-        protected AbstractRegressionResult doInBackground() throws CoordinateNumberException,
-                InsufficientDataException {
-            return RegressionFactory.getRegressionFactory().getRegression(selectedRegressionType)
+        protected AbstractRegressionResult doInBackground() throws CoordinateNumberException, InsufficientDataException {
+            return RegressionFactory.getRegressionFactory()
+                    .getRegression(selectedRegressionType)
                     .doRegression(spreadsheetModel.getCoordValues());
         }
 

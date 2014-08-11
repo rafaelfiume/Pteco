@@ -10,17 +10,12 @@ import org.jdesktop.swingx.JXTipOfTheDay;
 import org.jdesktop.swingx.tips.TipLoader;
 import org.jdesktop.swingx.tips.TipOfTheDayModel;
 
-/**
- * Creates the Tip of the Day dialog.
- * 
- * @author Rafael Fiume
- */
 public final class TipOfTheDay {
 
     private static JXTipOfTheDay tipOfTheDay;
 
     private TipOfTheDay() {
-        super();
+        // Use one of the TipOfTheDay#show methods instead
     }
 
     public static void show(final Component parentComponent) {

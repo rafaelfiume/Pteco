@@ -7,8 +7,6 @@ import org.jfree.chart.JFreeChart;
 
 /**
  * Dislay the linear and non-linear regression result's chart.
- * 
- * @author Rafael Fiume
  */
 public final class ChartView extends JPanel {
 
@@ -21,9 +19,6 @@ public final class ChartView extends JPanel {
         setLayout(new java.awt.BorderLayout());
     }
 
-    /**
-     * Creates and configures the chart panel.
-     */
     private ChartPanel createChartPanel(JFreeChart chart) {
         final ChartPanel chartPanel = new ChartPanel(chart, true);
         chartPanel.setMouseZoomable(true, false);

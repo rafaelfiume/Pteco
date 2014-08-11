@@ -3,7 +3,6 @@
  * 
  * Created on 16/07/2007, 10:24:54
  */
-
 package org.ptolomeu.application;
 
 import java.awt.event.WindowAdapter;
@@ -14,13 +13,17 @@ import org.jdesktop.application.SingleFrameApplication;
 import org.ptolomeu.gui.ModelMatView;
 import org.ptolomeu.gui.help.TipOfTheDay;
 
-/**
- * 
- * @author Rafael Fiume
- */
 public class ModelMatApplication extends SingleFrameApplication {
 
     private ModelMatView view;
+
+    public static Application getApplication() {
+        return Application.getInstance(ModelMatApplication.class);
+    }
+
+    public static void main(String[] args) {
+        Application.launch(ModelMatApplication.class, args);
+    }
 
     @Override
     protected void startup() {
@@ -33,14 +36,6 @@ public class ModelMatApplication extends SingleFrameApplication {
     protected void ready() {
         TrayIconManager.setTrayIcon();
         TipOfTheDay.show(view.getFrame());
-    }
-
-    public static Application getApplication() {
-        return Application.getInstance(ModelMatApplication.class);
-    }
-
-    public static void main(String[] args) {
-        Application.launch(ModelMatApplication.class, args);
     }
 
     private class FrameHandler extends WindowAdapter {
