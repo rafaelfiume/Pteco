@@ -44,7 +44,7 @@ public final class TipOfTheDay {
 
             final Properties prop = new Properties();
             final InputStream input = TipOfTheDay.class
-                    .getResourceAsStream("/org/ptolomeu/gui/help/tip.properties");
+                    .getResourceAsStream("/tip.properties");
             try {
                 prop.load(input);
 

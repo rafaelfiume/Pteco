@@ -26,9 +26,9 @@ public class ShowAboutDialog extends AbstractAction {
 
     private static final String ACTION_COMMAND_KEY = "show_about_dialog";
 
-    private static final String SMALL_ICON = "/org/ptolomeu/gui/resources/About16.gif";
+    private static final String SMALL_ICON = "/icons/About16.gif";
 
-    private static final String LARGE_ICON_KEY = "/org/ptolomeu/gui/resources/About24.gif";
+    private static final String LARGE_ICON_KEY = "/icons/About24.gif";
 
     /**
      * Creates a new instance of ShowAboutDialog.

@@ -36,61 +36,38 @@ public class ModelMatView extends FrameView {
     private final ApplicationModel applicationModel = new ApplicationModel(RegressionType.LINEAR);
 
     private final JButton bClear = new JButton();
-
     private final JButton bEdit = new JButton();
-
     private final JButton bExport = new JButton();
-
     private final JButton bImport = new JButton();
-
     private final JButton bOpenFile = new JButton();
-
     private final JButton bPrint = new JButton();
-
     private final JButton bRun = new JButton();
-
     private final JButton bSave = new JButton();
-
     private final JButton bShowAbout = new JButton();
-
     private final JButton bShowTip = new JButton();
 
     private final ButtonGroup buttonGroup = new ButtonGroup();
 
     private final JMenu mFile = new JMenu();
-
     private final JMenu mHelp = new JMenu();
-
     private final JMenu mModeling = new JMenu();
-
     private final JMenu mSheet = new JMenu();
 
     private final JMenuItem mhAbout = new JMenuItem();
-
     private final JSeparator mhSeparator1 = new JSeparator();
-
     private final JMenuItem mhTipOfTheDay = new JMenuItem();
-
     private final JMenuItem miEditColumnName = new JMenuItem();
-
     private final JMenuItem miExit = new JMenuItem();
-
     private final JMenuItem miExport = new JMenuItem();
-
     private final JMenuItem miImport = new JMenuItem();
-
     private final JMenuItem miOpen = new JMenuItem();
-
     private final JMenuItem miPrint = new JMenuItem();
-
     private final JMenuItem miSave = new JMenuItem();
 
     private final JSeparator miSeparator1 = new JSeparator();
-
     private final JSeparator miSeparator2 = new JSeparator();
 
     private final JRadioButtonMenuItem mrbLinearRegression = new JRadioButtonMenuItem();
-
     private final JRadioButtonMenuItem mrbNonLinearRegression = new JRadioButtonMenuItem();
 
     private final JMenuBar menuBar = new JMenuBar();
@@ -101,8 +78,7 @@ public class ModelMatView extends FrameView {
 
     private final ReportView reportView = new ReportView(applicationModel.getReportModel());
 
-    private final SpreadsheetView spreadsheet = new SpreadsheetView(
-            applicationModel.getSpreadsheetModel());
+    private final SpreadsheetView spreadsheet = new SpreadsheetView(applicationModel.getSpreadsheetModel());
 
     private final ChartView chartView = new ChartView(applicationModel.getChartModel());
 
@@ -152,31 +128,31 @@ public class ModelMatView extends FrameView {
 
         bOpenFile
                 .setAction(new ShowNotYetImplementedMessage("Open File",
-                        "/org/ptolomeu/gui/resources/Open16.gif",
-                        "/org/ptolomeu/gui/resources/Open24.gif"));
+                        "/icons/Open16.gif",
+                        "/icons/Open24.gif"));
         bOpenFile.setText(null);
         bOpenFile.setFocusable(false);
         bOpenFile.setHorizontalTextPosition(SwingConstants.CENTER);
         bOpenFile.setVerticalTextPosition(SwingConstants.BOTTOM);
 
         bImport.setAction(new ShowNotYetImplementedMessage("Import File",
-                "/org/ptolomeu/gui/resources/Import16.gif",
-                "/org/ptolomeu/gui/resources/Import24.gif"));
+                "/icons/Import16.gif",
+                "/icons/Import24.gif"));
         bImport.setText(null);
         bImport.setFocusable(false);
         bImport.setHorizontalTextPosition(SwingConstants.CENTER);
         bImport.setVerticalTextPosition(SwingConstants.BOTTOM);
 
         bExport.setAction(new ShowNotYetImplementedMessage("Export File",
-                "/org/ptolomeu/gui/resources/Export16.gif",
-                "/org/ptolomeu/gui/resources/Export24.gif"));
+                "/icons/Export16.gif",
+                "/icons/Export24.gif"));
         bExport.setText(null);
         bExport.setFocusable(false);
         bExport.setHorizontalTextPosition(SwingConstants.CENTER);
         bExport.setVerticalTextPosition(SwingConstants.BOTTOM);
 
         bSave.setAction(new ShowNotYetImplementedMessage("Save",
-                "/org/ptolomeu/gui/resources/Save16.gif", "/org/ptolomeu/gui/resources/Save24.gif"));
+                "/icons/Save16.gif", "/icons/Save24.gif"));
         bSave.setText(null);
         bSave.setFocusable(false);
         bSave.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -187,8 +163,8 @@ public class ModelMatView extends FrameView {
         bPrint.setHorizontalTextPosition(SwingConstants.CENTER);
         bPrint.setVerticalTextPosition(SwingConstants.BOTTOM);
         bPrint.setAction(new ShowNotYetImplementedMessage("Print",
-                "/org/ptolomeu/gui/resources/Print16.gif",
-                "/org/ptolomeu/gui/resources/Print24.gif"));
+                "/icons/Print16.gif",
+                "/icons/Print24.gif"));
         bPrint.setText(null);
 
         bEdit.setFocusable(false);
@@ -234,31 +210,31 @@ public class ModelMatView extends FrameView {
     }
 
     private void setUpStatusBar() {
-        statusBar.setText("Pteco");
+//        statusBar.setText("Pteco");
     }
 
     private void initFileMenu() {
         miOpen.setAction(new ShowNotYetImplementedMessage("Open File",
-                "/org/ptolomeu/gui/resources/Open16.gif", "/org/ptolomeu/gui/resources/Open24.gif"));
+                "/icons/Open16.gif", "/icons/Open24.gif"));
 
         miImport.setAction(new ShowNotYetImplementedMessage("Import File",
-                "/org/ptolomeu/gui/resources/Import16.gif",
-                "/org/ptolomeu/gui/resources/Import24.gif"));
+                "/icons/Import16.gif",
+                "/icons/Import24.gif"));
 
         miExport.setAction(new ShowNotYetImplementedMessage("Export File",
-                "/org/ptolomeu/gui/resources/Export16.gif",
-                "/org/ptolomeu/gui/resources/Export24.gif"));
+                "/icons/Export16.gif",
+                "/icons/Export24.gif"));
 
         miSave.setAction(new ShowNotYetImplementedMessage("Save",
-                "/org/ptolomeu/gui/resources/Save16.gif", "/org/ptolomeu/gui/resources/Save24.gif"));
+                "/icons/Save16.gif", "/icons/Save24.gif"));
 
         miExit.setIcon(new ImageIcon(getClass().getResource(
-                "/org/ptolomeu/gui/resources/Exit16.gif")));
+                "/icons/Exit16.gif")));
         miExit.setText("Exit");
 
         miPrint.setAction(new ShowNotYetImplementedMessage("Print",
-                "/org/ptolomeu/gui/resources/Print16.gif",
-                "/org/ptolomeu/gui/resources/Print24.gif"));
+                "/icons/Print16.gif",
+                "/icons/Print24.gif"));
 
         mFile.setText("File");
         mFile.add(miOpen);

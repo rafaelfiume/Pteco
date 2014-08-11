@@ -138,7 +138,7 @@ public final class SpreadsheetView extends JPanel {
             setFont(font);
             setBorder(border);
             setBackground(backgroundColor);
-            setValue((String) value);
+            setValue(value);
 
             return this;
         }

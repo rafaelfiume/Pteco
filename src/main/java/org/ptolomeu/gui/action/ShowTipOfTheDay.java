@@ -27,9 +27,9 @@ public class ShowTipOfTheDay extends AbstractAction {
 
     private static final String ACTION_COMMAND_KEY = "show_tip_of_the_day";
 
-    private static final String SMALL_ICON = "/org/ptolomeu/gui/resources/TipOfTheDay16.gif";
+    private static final String SMALL_ICON = "/icons/TipOfTheDay16.gif";
 
-    private static final String LARGE_ICON_KEY = "/org/ptolomeu/gui/resources/TipOfTheDay24.gif";
+    private static final String LARGE_ICON_KEY = "/icons/TipOfTheDay24.gif";
 
     /**
      * Creates a new instance of ShowTipOfTheDay.
