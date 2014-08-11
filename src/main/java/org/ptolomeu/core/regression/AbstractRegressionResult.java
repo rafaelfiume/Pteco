@@ -22,9 +22,9 @@ public abstract class AbstractRegressionResult {
     /**
      * Os valores de acordo com sua coordenada (x, y).
      */
-    protected Map<XYIndex, Double> coordValues;
+    protected Map<XyIndex, Double> coordValues;
 
-    public void setCoordValues(final Map<XYIndex, Double> coordValues) {
+    public void setCoordValues(final Map<XyIndex, Double> coordValues) {
         this.coordValues = coordValues;
     }
 
@@ -37,16 +37,16 @@ public abstract class AbstractRegressionResult {
     }
 
     public List<Point> getPointsIn2DSpace() {
-        Set<XYIndex> indexes = coordValues.keySet();
+        Set<XyIndex> indexes = coordValues.keySet();
         final List<Point> points = new ArrayList<Point>(15);
 
-        for (XYIndex index : indexes) {
+        for (XyIndex index : indexes) {
             if (index.getColumn() != 0) {
                 continue;
             }
 
             final Double x = coordValues.get(index);
-            final Double y = coordValues.get(new XYIndex(index.getRow(), index.getColumn() + 1));
+            final Double y = coordValues.get(new XyIndex(index.getRow(), index.getColumn() + 1));
 
             points.add(new Point(x, y));
         }

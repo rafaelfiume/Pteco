@@ -3,7 +3,6 @@
  * 
  * Created on 14/07/2007, 04:22:50
  */
-
 package org.ptolomeu.core.regression;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -11,9 +10,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- * A 2D point in the space, based on the coordinate (x, y).
- * 
- * @author Rafael Fiume
+ * A 2D point in the space based on the coordinate (x, y).
  */
 public class Point implements Comparable<Point> {
 

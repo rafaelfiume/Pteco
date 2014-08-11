@@ -76,7 +76,7 @@ public class ApplicationModel {
         }
 
         protected AbstractRegressionResult doInBackground() throws CoordinateNumberException, InsufficientDataException {
-            return RegressionFactory.getRegressionFactory()
+            return RegressionFactory.getInstance()
                     .getRegression(selectedRegressionType)
                     .doRegression(spreadsheetModel.getCoordValues());
         }

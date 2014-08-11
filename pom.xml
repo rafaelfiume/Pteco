@@ -1,27 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.rafaelfiume</groupId>
-  <artifactId>pteco</artifactId>
-  <version>0.4-SNAPSHOT</version>
-  <packaging>jar</packaging>
+    <groupId>com.rafaelfiume</groupId>
+    <artifactId>pteco</artifactId>
+    <version>0.4-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-  <name>pteco</name>
-  <url>https://rafaelfiume.wordpress.com/2007/05/20/modelmat/</url>
+    <name>pteco</name>
+    <url>https://rafaelfiume.wordpress.com/2007/05/20/modelmat/</url>
 
     <dependencies>
         <dependency>
             <groupId>org.jdesktop.bsaf</groupId>
             <artifactId>bsaf</artifactId>
             <version>1.9.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.3.2</version>
         </dependency>
 
         <dependency>
@@ -35,7 +29,6 @@
             <artifactId>jgoodies-looks</artifactId>
             <version>2.5.3</version>
         </dependency>
-
         <dependency>
             <groupId>com.jgoodies</groupId>
             <artifactId>jgoodies-forms</artifactId>
@@ -46,6 +39,19 @@
             <groupId>org.swinglabs.swingx</groupId>
             <artifactId>swingx-core</artifactId>
             <version>1.6.5-1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.3.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -60,6 +66,19 @@
                 <configuration>
                     <target>1.7</target>
                     <source>1.7</source>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.ptolomeu.application.ModelMatApplication</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>

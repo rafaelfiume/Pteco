@@ -23,7 +23,7 @@ public class NonLinearRegression extends AbstractRegression {
     private double m21, m31, m32, y1, y2, y3;
 
     @Override
-    public NonLinearRegressionResult doRegression(final Map<XYIndex, Double> matriz)
+    public NonLinearRegressionResult doRegression(final Map<XyIndex, Double> matriz)
             throws InsufficientDataException, CoordinateNumberException {
 
         final int numCoord = (matriz.size() / 2);

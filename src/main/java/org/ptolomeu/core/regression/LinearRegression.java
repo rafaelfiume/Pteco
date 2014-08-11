@@ -3,7 +3,6 @@
  *
  * Created on 20 de Dezembro de 2006, 05:09
  */
-
 package org.ptolomeu.core.regression;
 
 import java.util.Map;
@@ -11,10 +10,6 @@ import java.util.Map;
 import org.ptolomeu.core.regression.exception.CoordinateNumberException;
 import org.ptolomeu.core.regression.exception.InsufficientDataException;
 
-/**
- * 
- * @author Rafael Fiume
- */
 public class LinearRegression extends AbstractRegression {
 
     private double sumX, sumY, sumX2, sumY2, sumXY;
@@ -25,7 +20,7 @@ public class LinearRegression extends AbstractRegression {
 
     private double coefDeCorrelacao;
 
-    public LinearRegressionResult doRegression(final Map<XYIndex, Double> coordValues)
+    public LinearRegressionResult doRegression(final Map<XyIndex, Double> coordValues)
             throws InsufficientDataException, CoordinateNumberException {
 
         final int numCoord = (coordValues.size() / 2);
