@@ -74,11 +74,11 @@ public class ReportModel implements Reporter {
 
         try {
             String[] resultCoefficients = new String[2];
-            resultCoefficients[0] = format.format(result.coefA);
-            resultCoefficients[1] = format.format(result.coefB);
+            resultCoefficients[0] = format.format(result.coefA());
+            resultCoefficients[1] = format.format(result.coefB());
 
-            final String correlation = format.format(result.coefDeCorrelacao);
-            final String determination = format.format(result.coefDeDeterminacao * 100);
+            final String correlation = format.format(result.coefDeCorrelacao());
+            final String determination = format.format(result.coefDeDeterminacao() * 100);
 
             /****************** LINEAR FUNCTION: f(x) = a + bx ****************/
             final String linearRegression = "Linear Regression:";
@@ -88,11 +88,11 @@ public class ReportModel implements Reporter {
 
             doc.insertString(doc.getLength(), linearRegression, atributes[0]);
             doc.insertString(doc.getLength(), f_openParenthesis,
-                    result.coefDeDeterminacao >= 0.80 ? atributes[1] : atributes[4]);
+                    result.coefDeDeterminacao() >= 0.80 ? atributes[1] : atributes[4]);
 
             doc.insertString(doc.getLength(), varX, atributes[2]);
             doc.insertString(doc.getLength(), closeParenthesis,
-                    result.coefDeDeterminacao >= 0.80 ? atributes[1] : atributes[4]);
+                    result.coefDeDeterminacao() >= 0.80 ? atributes[1] : atributes[4]);
 
             doc.insertString(doc.getLength(), resultCoefficients[0], atributes[3]);
             doc.insertString(doc.getLength(), resultCoefficients[1], atributes[3]);
@@ -105,11 +105,11 @@ public class ReportModel implements Reporter {
             final String porcentagem = " % ";
 
             doc.insertString(doc.getLength(), coefCorrel,
-                    result.coefDeDeterminacao >= 0.80 ? atributes[1] : atributes[4]);
+                    result.coefDeDeterminacao() >= 0.80 ? atributes[1] : atributes[4]);
 
             doc.insertString(doc.getLength(), correlation, atributes[3]);
             doc.insertString(doc.getLength(), coefDeterm,
-                    result.coefDeDeterminacao >= 0.80 ? atributes[1] : atributes[4]);
+                    result.coefDeDeterminacao() >= 0.80 ? atributes[1] : atributes[4]);
 
             doc.insertString(doc.getLength(), determination, atributes[3]);
             doc.insertString(doc.getLength(), porcentagem, atributes[5]);
@@ -140,9 +140,9 @@ public class ReportModel implements Reporter {
 
         try {
             String[] resultCoefficients = new String[3];
-            resultCoefficients[0] = format.format(result.coefA);
-            resultCoefficients[1] = format.format(result.coefB);
-            resultCoefficients[2] = format.format(result.coefC);
+            resultCoefficients[0] = format.format(result.coefA());
+            resultCoefficients[1] = format.format(result.coefB());
+            resultCoefficients[2] = format.format(result.coefC());
 
             /************ Non-Linear Function: f(x) = a + bx + cx2 ************/
 

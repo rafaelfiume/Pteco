@@ -11,11 +11,9 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.function.LineFunction2D;
 import org.jfree.data.function.PowerFunction2D;
-import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -63,18 +61,18 @@ public class ChartModel {
     }
 
     public void reportResult(final LinearRegressionResult result) {
-        final LineFunction2D lineFunction2D = new LineFunction2D(result.coefA, result.coefB);
+        final LineFunction2D lineFunction2D = new LineFunction2D(result.coefA(), result.coefB());
         final XYDataset xyDataset = sampleFunction2D(lineFunction2D, result.min(), result.max(), 500, "Fitted Regression Line");
 
-        chart.getXYPlot().setDataset(1, createRegressionDataset((XYSeriesCollection) xyDataset, result.getPointsIn2DSpace()));
+        chart.getXYPlot().setDataset(1, createRegressionDataset((XYSeriesCollection) xyDataset, result.getCartesianCoordinates()));
         chart.setTitle("Linear Regression");
     }
 
     public void reportResult(final NonLinearRegressionResult result) {
-        final PowerFunction2D powerFunction2D = new PowerFunction2D(result.coefC, 2);
+        final PowerFunction2D powerFunction2D = new PowerFunction2D(result.coefC(), 2);
         final XYDataset xyDataset = sampleFunction2D(powerFunction2D, result.min(), result.max(), 500, "Fitted Non-Regression Line");
 
-        chart.getXYPlot().setDataset(1, createRegressionDataset((XYSeriesCollection) xyDataset, result.getPointsIn2DSpace()));
+        chart.getXYPlot().setDataset(1, createRegressionDataset((XYSeriesCollection) xyDataset, result.getCartesianCoordinates()));
         chart.setTitle("Non-Linear Regression");
     }
 

@@ -7,8 +7,8 @@ import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.ptolomeu.application.ModelMatApplication;
 import org.ptolomeu.core.regression.AbstractRegressionResult;
+import org.ptolomeu.core.regression.Regression;
 import org.ptolomeu.core.regression.RegressionFactory;
-import org.ptolomeu.core.regression.AbstractRegression.RegressionType;
 import org.ptolomeu.core.regression.exception.CoordinateNumberException;
 import org.ptolomeu.core.regression.exception.InsufficientDataException;
 import org.ptolomeu.gui.chart.ChartModel;
@@ -29,9 +29,9 @@ public class ApplicationModel {
     /**
      * The regression selected by the user.
      */
-    private RegressionType selectedRegressionType;
+    private Regression.Type selectedRegressionType;
 
-    public ApplicationModel(RegressionType regressionType) {
+    public ApplicationModel(Regression.Type regressionType) {
         this.selectedRegressionType = regressionType;
     }
 
@@ -62,7 +62,7 @@ public class ApplicationModel {
     /**
      * Sets the the linear regression type (currently, linear or non-linear).
      */
-    public void setSelectedRegressionType(RegressionType selectedRegressionType) {
+    public void setSelectedRegressionType(Regression.Type selectedRegressionType) {
         this.selectedRegressionType = selectedRegressionType;
     }
 

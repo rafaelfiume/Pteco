@@ -1,35 +1,23 @@
-/*
- * AbstractRegression.java
- *
- * Created on 20 de Dezembro de 2006, 04:07
- */
-
 package org.ptolomeu.core.regression;
+
+import org.ptolomeu.core.regression.exception.CoordinateNumberException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.ptolomeu.core.regression.exception.CoordinateNumberException;
-import org.ptolomeu.core.regression.exception.InsufficientDataException;
+final class RegressionUtils {
 
-public abstract class AbstractRegression {
-
-    public enum RegressionType {
-        LINEAR, NON_LINEAR;
+    private RegressionUtils() {
+        // Utility class
     }
 
-    protected int MIN_COORD = 3;
-
-    public abstract AbstractRegressionResult doRegression(Map<XyIndex, Double> coordValues)
-            throws InsufficientDataException, CoordinateNumberException;
-
-    protected double sumX(final Map<XyIndex, Double> coordValues) {
+    static double sumX(final Map<GridIndex, Double> coordValues) {
         double somaDeX = 0.0;
 
-        for (XyIndex coord : coordValues.keySet()) {
-            if (coord.getColumn() == 0) {
+        for (GridIndex coord : coordValues.keySet()) {
+            if (coord.getColumnIndex() == 0) {
                 somaDeX += coordValues.get(coord);
             }
         }
@@ -37,11 +25,11 @@ public abstract class AbstractRegression {
         return somaDeX;
     }
 
-    protected double sumY(final Map<XyIndex, Double> coordValues) {
+    static double sumY(final Map<GridIndex, Double> coordValues) {
         double somaDeY = 0.0;
 
-        for (XyIndex coord : coordValues.keySet()) {
-            if (coord.getColumn() == 1) {
+        for (GridIndex coord : coordValues.keySet()) {
+            if (coord.getColumnIndex() == 1) {
                 somaDeY += coordValues.get(coord);
             }
         }
@@ -49,7 +37,7 @@ public abstract class AbstractRegression {
         return somaDeY;
     }
 
-    protected double sumXY(final Map<XyIndex, Double> coordValues) throws CoordinateNumberException {
+    static double sumXY(final Map<GridIndex, Double> coordValues) throws CoordinateNumberException {
         int numCoordX = 0;
         int numCoordY = 0;
         double somaDeMultDeXY = 0.0;
@@ -57,13 +45,13 @@ public abstract class AbstractRegression {
         final List<Double> listX = new ArrayList<>();
         final List<Double> listY = new ArrayList<>();
 
-        for (XyIndex coord : coordValues.keySet()) {
-            if (coord.getColumn() == 0) {
+        for (GridIndex coord : coordValues.keySet()) {
+            if (coord.getColumnIndex() == 0) {
                 listX.add(coordValues.get(coord));
                 numCoordX++;
                 continue;
 
-            } else if (coord.getColumn() == 1) {
+            } else if (coord.getColumnIndex() == 1) {
                 listY.add(coordValues.get(coord));
                 numCoordY++;
             }
@@ -85,12 +73,12 @@ public abstract class AbstractRegression {
         return somaDeMultDeXY;
     }
 
-    protected double sumX2(final Map<XyIndex, Double> coordValues) {
+    static double sumX2(final Map<GridIndex, Double> coordValues) {
         double somaDeX2 = 0.0;
 
-        for (XyIndex coord : coordValues.keySet()) {
+        for (GridIndex coord : coordValues.keySet()) {
 
-            if (coord.getColumn() == 0) {
+            if (coord.getColumnIndex() == 0) {
                 Double dX2 = coordValues.get(coord);
                 somaDeX2 += Math.pow(dX2.doubleValue(), 2);
             }
@@ -99,12 +87,12 @@ public abstract class AbstractRegression {
         return somaDeX2;
     }
 
-    protected double sumY2(Map<XyIndex, Double> coordValues) {
+    static double sumY2(Map<GridIndex, Double> coordValues) {
         double somaDeY2 = 0.0;
 
-        for (XyIndex coord : coordValues.keySet()) {
+        for (GridIndex coord : coordValues.keySet()) {
 
-            if (coord.getColumn() == 1) {
+            if (coord.getColumnIndex() == 1) {
                 Double dY2 = coordValues.get(coord);
                 somaDeY2 += Math.pow(dY2.doubleValue(), 2);
             }
@@ -113,12 +101,12 @@ public abstract class AbstractRegression {
         return somaDeY2;
     }
 
-    protected double sumX3(final Map<XyIndex, Double> coordValues) {
+    static double sumX3(final Map<GridIndex, Double> coordValues) {
         double somaDeX3 = 0.0;
 
-        for (XyIndex coord : coordValues.keySet()) {
+        for (GridIndex coord : coordValues.keySet()) {
 
-            if (coord.getColumn() == 0) {
+            if (coord.getColumnIndex() == 0) {
                 Double dX3 = coordValues.get(coord);
                 somaDeX3 += Math.pow(dX3.doubleValue(), 3);
             }
@@ -127,12 +115,12 @@ public abstract class AbstractRegression {
         return somaDeX3;
     }
 
-    protected double sumX4(final Map<XyIndex, Double> coordValues) {
+    static double sumX4(final Map<GridIndex, Double> coordValues) {
         double somaDeX4 = 0.0;
 
-        for (XyIndex coord : coordValues.keySet()) {
+        for (GridIndex coord : coordValues.keySet()) {
 
-            if (coord.getColumn() == 0) {
+            if (coord.getColumnIndex() == 0) {
                 Double dX4 = coordValues.get(coord);
                 somaDeX4 += Math.pow(dX4.doubleValue(), 4);
             }
@@ -141,19 +129,19 @@ public abstract class AbstractRegression {
         return somaDeX4;
     }
 
-    protected double sumX2Y(final Map<XyIndex, Double> coordValues) {
+    static double sumX2Y(final Map<GridIndex, Double> coordValues) {
         double somaDeMultDeX2Y = 0.0;
 
-        List<Double> listX = new ArrayList<Double>();
-        List<Double> listY = new ArrayList<Double>();
+        List<Double> listX = new ArrayList<>();
+        List<Double> listY = new ArrayList<>();
 
-        for (XyIndex coord : coordValues.keySet()) {
+        for (GridIndex coord : coordValues.keySet()) {
 
-            if (coord.getColumn() == 0) {
+            if (coord.getColumnIndex() == 0) {
                 listX.add(coordValues.get(coord));
                 continue;
 
-            } else if (coord.getColumn() == 1) {
+            } else if (coord.getColumnIndex() == 1) {
                 listY.add(coordValues.get(coord));
             }
         }
@@ -170,5 +158,4 @@ public abstract class AbstractRegression {
 
         return somaDeMultDeX2Y;
     }
-
 }

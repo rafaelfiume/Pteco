@@ -55,7 +55,7 @@ public class Point implements Comparable<Point> {
         if (!(other instanceof Point)) {
             return false;
         }
-        final Point castOther = (Point) other;
-        return new EqualsBuilder().append(x, castOther.x).append(y, castOther.y).isEquals();
+        final Point otherPoint = (Point) other;
+        return new EqualsBuilder().append(x, otherPoint.x).append(y, otherPoint.y).isEquals();
     }
 }

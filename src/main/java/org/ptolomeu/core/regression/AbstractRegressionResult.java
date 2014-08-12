@@ -3,7 +3,6 @@
  *
  * Created on 20 de Dezembro de 2006, 03:58
  */
-
 package org.ptolomeu.core.regression;
 
 import java.util.ArrayList;
@@ -12,45 +11,36 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * TBD: AbstractRegressionResult doesn't seems anemic, but its subclasses do.
- * 
- * @author Rafael Fiume
- */
 public abstract class AbstractRegressionResult {
 
-    /**
-     * Os valores de acordo com sua coordenada (x, y).
-     */
-    protected Map<XyIndex, Double> coordValues;
-
-    public void setCoordValues(final Map<XyIndex, Double> coordValues) {
-        this.coordValues = coordValues;
-    }
-
     public double min() {
-        return Collections.min(coordValues.values());
+        return Collections.min(coordValues().values());
     }
 
     public double max() {
-        return Collections.max(coordValues.values());
+        return Collections.max(coordValues().values());
     }
 
-    public List<Point> getPointsIn2DSpace() {
-        Set<XyIndex> indexes = coordValues.keySet();
-        final List<Point> points = new ArrayList<Point>(15);
+    public List<Point> getCartesianCoordinates() {
+        Set<GridIndex> indexes = coordValues().keySet();
+        final List<Point> points = new ArrayList<>(15);
 
-        for (XyIndex index : indexes) {
-            if (index.getColumn() != 0) {
+        for (GridIndex index : indexes) {
+            if (index.getColumnIndex() != 0) {
                 continue;
             }
 
-            final Double x = coordValues.get(index);
-            final Double y = coordValues.get(new XyIndex(index.getRow(), index.getColumn() + 1));
+            final Double x = coordValues().get(index);
+            final Double y = coordValues().get(new GridIndex(index.getRowIndex(), index.getColumnIndex() + 1));
 
             points.add(new Point(x, y));
         }
 
         return points;
     }
+
+    /**
+     * Os valores de acordo com sua coordenada (x, y).
+     */
+    protected abstract Map<GridIndex, Double> coordValues();
 }

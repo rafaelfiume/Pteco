@@ -5,8 +5,6 @@
  */
 package org.ptolomeu.core.regression;
 
-import org.ptolomeu.core.regression.AbstractRegression.RegressionType;
-
 public class RegressionFactory {
 
     private static RegressionFactory INSTANCE = new RegressionFactory();
@@ -19,7 +17,7 @@ public class RegressionFactory {
         return INSTANCE;
     }
 
-    public AbstractRegression getRegression(RegressionType type) {
+    public Regression getRegression(Regression.Type type) {
         switch (type) {
             case LINEAR: return newLinearRegression();
             case NON_LINEAR: return newNonLinearRegression();
@@ -27,11 +25,11 @@ public class RegressionFactory {
         throw new IllegalArgumentException("Unknown argument: " + type);
     }
 
-    private AbstractRegression newLinearRegression() {
+    private Regression newLinearRegression() {
         return new LinearRegression();
     }
 
-    private AbstractRegression newNonLinearRegression() {
+    private Regression newNonLinearRegression() {
         return new NonLinearRegression();
     }
 }

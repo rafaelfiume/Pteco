@@ -15,16 +15,16 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-import org.ptolomeu.core.regression.XyIndex;
+import org.ptolomeu.core.regression.GridIndex;
 
 public class SpreadsheetModel implements TableModel, Serializable {
 
-    /**
-     * Coordinates (x, y) added by the user in the spreadsheet.
-     */
-    private Map<XyIndex, Double> coordValues = new TreeMap();
-
     private static final int NUM_ROW = 5000;
+
+    /**
+     * Coordinates (x or y) added by the user in the spreadsheet.
+     */
+    private final Map<GridIndex, Double> coordValues = new TreeMap();
 
     private final String[] columnName;
     private final int numColumn;
@@ -84,16 +84,16 @@ public class SpreadsheetModel implements TableModel, Serializable {
 
     @Override
     public Object getValueAt(final int rowIndex, final int columnIndex) {
-        return coordValues.get(new XyIndex(rowIndex, columnIndex));
+        return coordValues.get(new GridIndex(rowIndex, columnIndex));
     }
 
     @Override
     public void setValueAt(Object aValue, final int rowIndex, int columnIndex) {
         if (aValue == null) {
-            coordValues.remove(new XyIndex(rowIndex, columnIndex));
+            coordValues.remove(new GridIndex(rowIndex, columnIndex));
             return;
         }
-        coordValues.put(new XyIndex(rowIndex, columnIndex), (Double) aValue);
+        coordValues.put(new GridIndex(rowIndex, columnIndex), (Double) aValue);
 
         maxRow = Math.max(maxRow, rowIndex);
         fireTableCellUpdated(rowIndex, columnIndex);
@@ -113,14 +113,8 @@ public class SpreadsheetModel implements TableModel, Serializable {
 
     // Others helpful methods ************************************************
 
-    public Map<XyIndex, Double> getCoordValues() {
+    public Map<GridIndex, Double> getCoordValues() {
         return Collections.unmodifiableMap(coordValues);
-    }
-
-    public SpreadsheetModel copy() {
-        SpreadsheetModel spreadsheetModel = new SpreadsheetModel();
-        spreadsheetModel.coordValues = Collections.unmodifiableMap(coordValues);
-        return spreadsheetModel;
     }
 
     private void fireTableCellUpdated(final int row, final int column) {

@@ -20,7 +20,7 @@ import org.jdesktop.application.Application;
 import org.jdesktop.application.FrameView;
 import org.jdesktop.swingx.JXStatusBar;
 import org.ptolomeu.application.ModelMatApplication;
-import org.ptolomeu.core.regression.AbstractRegression.RegressionType;
+import org.ptolomeu.core.regression.Regression;
 import org.ptolomeu.gui.actions.ShowAboutDialogAction;
 import org.ptolomeu.gui.actions.ShowNotYetImplementedMessageAction;
 import org.ptolomeu.gui.actions.ShowTipOfTheDayAction;
@@ -36,7 +36,7 @@ import static javax.swing.SwingConstants.CENTER;
 
 public class ModelMatView extends FrameView {
 
-    private final ApplicationModel applicationModel = new ApplicationModel(RegressionType.LINEAR);
+    private final ApplicationModel applicationModel = new ApplicationModel(Regression.Type.LINEAR);
 
     private final JButton bClear = new JButton();
     private final JButton bEdit = new JButton();
@@ -277,11 +277,11 @@ public class ModelMatView extends FrameView {
     }
 
     private void mrbNonLinearRegressionItemStateChanged(ItemEvent evt) {
-        applicationModel.setSelectedRegressionType(RegressionType.NON_LINEAR);
+        applicationModel.setSelectedRegressionType(Regression.Type.NON_LINEAR);
     }
 
     private void mrbLinearRegressionItemStateChanged(ItemEvent evt) {
-        applicationModel.setSelectedRegressionType(RegressionType.LINEAR);
+        applicationModel.setSelectedRegressionType(Regression.Type.LINEAR);
     }
 
     /*

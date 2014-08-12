@@ -7,8 +7,8 @@ import org.junit.rules.ExpectedException;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
-import static org.ptolomeu.core.regression.AbstractRegression.RegressionType.LINEAR;
-import static org.ptolomeu.core.regression.AbstractRegression.RegressionType.NON_LINEAR;
+import static org.ptolomeu.core.regression.Regression.Type.LINEAR;
+import static org.ptolomeu.core.regression.Regression.Type.NON_LINEAR;
 
 public class RegressionFactoryTest {
 

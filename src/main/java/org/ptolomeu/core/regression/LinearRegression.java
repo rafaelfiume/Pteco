@@ -10,63 +10,60 @@ import java.util.Map;
 import org.ptolomeu.core.regression.exception.CoordinateNumberException;
 import org.ptolomeu.core.regression.exception.InsufficientDataException;
 
-public class LinearRegression extends AbstractRegression {
+import static org.ptolomeu.core.regression.RegressionUtils.sumX;
+import static org.ptolomeu.core.regression.RegressionUtils.sumX2;
+import static org.ptolomeu.core.regression.RegressionUtils.sumXY;
+import static org.ptolomeu.core.regression.RegressionUtils.sumY;
+import static org.ptolomeu.core.regression.RegressionUtils.sumY2;
 
-    private double sumX, sumY, sumX2, sumY2, sumXY;
+public class LinearRegression implements Regression {
 
-    private double desvioPadraoX, desvioPadraoY;
+    private static final int MIN_COORD = 3;
 
-    private double covarianciaXY;
-
-    private double coefDeCorrelacao;
-
-    public LinearRegressionResult doRegression(final Map<XyIndex, Double> coordValues)
+    public LinearRegressionResult doRegression(final Map<GridIndex, Double> coordValues)
             throws InsufficientDataException, CoordinateNumberException {
 
         final int numCoord = (coordValues.size() / 2);
 
         if (numCoord < MIN_COORD) {
-            throw new InsufficientDataException();
+            throw new InsufficientDataException("Minimum number of coordinates to calculate linear regression is " + MIN_COORD);
         }
 
-        final LinearRegressionResult linearResult = new LinearRegressionResult();
+        final double sumX = sumX(coordValues);
+        final double sumY = sumY(coordValues);
+        final double sumX2 = sumX2(coordValues);
+        final double sumY2 = sumY2(coordValues);
+        final double sumXY = sumXY(coordValues);
 
-        sumX = sumX(coordValues);
-        sumY = sumY(coordValues);
-        sumX2 = sumX2(coordValues);
-        sumY2 = sumY2(coordValues);
-        sumXY = sumXY(coordValues);
+        final double coefB =
+                ((numCoord * sumXY) - (sumX * sumY))
+                        /
+                ((numCoord * sumX2) - (sumX * sumX));
 
-        linearResult.coefB = ((numCoord * sumXY) - (sumX * sumY))
-                / ((numCoord * sumX2) - (sumX * sumX));
+        final double coefA = (sumY - (coefB * sumX)) / numCoord;
+        final double coefDeCorrelacao = getCorrelationCoefficient(numCoord, sumX, sumY, sumX2, sumY2, sumXY);
+        final double coefDeDeterminacao = getDeterminationCoefficient(coefDeCorrelacao);
 
-        linearResult.coefA = (sumY - (linearResult.coefB * sumX)) / numCoord;
-        linearResult.coefDeCorrelacao = getCorrelationCoefficient(numCoord);
-        linearResult.coefDeDeterminacao = getDeterminationCoefficient();
-        linearResult.setCoordValues(coordValues);
-
-        return linearResult;
+        return new LinearRegressionResult(coefA, coefB, coefDeCorrelacao, coefDeDeterminacao, coordValues);
     }
 
     /**
      * Computes and returns the correlation coefficient of the linear regression.
      */
-    private double getCorrelationCoefficient(final int numCoord) {
-        desvioPadraoX = sumX2 - ((1 / (double) numCoord) * (Math.pow(sumX, 2)));
+    private double getCorrelationCoefficient(int numCoord, double sumX, double sumY, double sumX2, double sumY2, double sumXY) {
+        final double desvioPadraoX = sumX2 - ((1 / (double) numCoord) * (Math.pow(sumX, 2)));
 
-        desvioPadraoY = sumY2 - ((1 / (double) numCoord) * (Math.pow(sumY, 2)));
+        final double desvioPadraoY = sumY2 - ((1 / (double) numCoord) * (Math.pow(sumY, 2)));
 
-        covarianciaXY = sumXY - ((1 / (double) numCoord) * (sumX * sumY));
+        final double covarianciaXY = sumXY - ((1 / (double) numCoord) * (sumX * sumY));
 
-        coefDeCorrelacao = covarianciaXY / Math.sqrt(desvioPadraoX * desvioPadraoY);
-
-        return coefDeCorrelacao;
+        return covarianciaXY / Math.sqrt(desvioPadraoX * desvioPadraoY);
     }
 
     /**
      * Computes and returns the determination coefficient of the linear regression.
      */
-    private double getDeterminationCoefficient() {
+    private double getDeterminationCoefficient(double coefDeCorrelacao) {
         return Math.pow(coefDeCorrelacao, 2);
     }
 
