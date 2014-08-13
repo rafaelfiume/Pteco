@@ -1,8 +1,10 @@
 package org.ptolomeu.gui;
 
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
+
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -26,11 +28,7 @@ import org.ptolomeu.gui.actions.ShowNotYetImplementedMessageAction;
 import org.ptolomeu.gui.actions.ShowTipOfTheDayAction;
 import org.ptolomeu.gui.chart.ChartView;
 import org.ptolomeu.gui.report.ReportView;
-import org.ptolomeu.gui.table.SpreadsheetModel;
 import org.ptolomeu.gui.table.SpreadsheetView;
-
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import static javax.swing.SwingConstants.BOTTOM;
 import static javax.swing.SwingConstants.CENTER;
@@ -163,18 +161,18 @@ public class ModelMatView extends FrameView {
         bEdit.setFocusable(false);
         bEdit.setHorizontalTextPosition(CENTER);
         bEdit.setVerticalTextPosition(BOTTOM);
-        bEdit.setAction(getAction(SpreadsheetModel.class, applicationModel.getSpreadsheetModel(), "changeColumnName"));
+        bEdit.setAction(getAction(applicationModel.getSpreadsheetModel(), "changeColumnName"));
         bEdit.setText(null);
 
         bRun.setFocusable(false);
         bRun.setHorizontalTextPosition(CENTER);
         bRun.setVerticalTextPosition(BOTTOM);
-        bRun.setAction(getAction(ApplicationModel.class, applicationModel, "doRegression"));
+        bRun.setAction(getAction(applicationModel, "doRegression"));
 
         bClear.setFocusable(false);
         bClear.setHorizontalTextPosition(CENTER);
         bClear.setVerticalTextPosition(BOTTOM);
-        bClear.setAction(getAction(ApplicationModel.class, applicationModel, "clear"));
+        bClear.setAction(getAction(applicationModel, "clear"));
 
         bShowTip.setAction(new ShowTipOfTheDayAction());
         bShowTip.setText(null);
@@ -235,7 +233,7 @@ public class ModelMatView extends FrameView {
 
     private void initSheetMenu() {
         mSheet.setText("Spreadsheet");
-        miEditColumnName.setAction(getAction(SpreadsheetView.class, spreadsheet, "changeColumnName"));
+        miEditColumnName.setAction(getAction(applicationModel.getSpreadsheetModel(), "changeColumnName"));
         mSheet.add(miEditColumnName);
         menuBar.add(mSheet);
     }
@@ -288,8 +286,8 @@ public class ModelMatView extends FrameView {
     /*
      * Utility method to retrieve Actions.
      */
-    private Action getAction(Class actionsClass, Object actionsObject, String actionName) {
-        return ModelMatApplication.getApplication().getContext().getActionMap(actionsClass, actionsObject).get(actionName);
+    private Action getAction(Object actionsObject, String actionName) {
+        return ModelMatApplication.getApplication().getContext().getActionMap(actionsObject.getClass(), actionsObject).get(actionName);
     }
 
 }

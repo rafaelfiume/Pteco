@@ -1,26 +1,19 @@
 package org.ptolomeu.gui.table;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+
+import javax.swing.*;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.*;
+import java.awt.*;
 
 import static javax.swing.JTable.AUTO_RESIZE_OFF;
 import static javax.swing.SwingConstants.CENTER;
 import static javax.swing.border.BevelBorder.RAISED;
+import static javax.swing.event.TableModelEvent.HEADER_ROW;
 
 public final class SpreadsheetView extends JPanel {
 
@@ -32,6 +25,7 @@ public final class SpreadsheetView extends JPanel {
 
     public SpreadsheetView(final SpreadsheetModel model) {
         this.table = new JTable() {
+
             @Override
             protected JTableHeader createDefaultTableHeader() {
                 final TableColumnModel tableColumnModel = model.getTableColumnModel();
@@ -39,6 +33,8 @@ public final class SpreadsheetView extends JPanel {
                 return new JTableHeader(tableColumnModel);
             }
         };
+
+        model.addTableModelListener(new UpdateHeaderNameListener());
 
         initComponents(model);
         setUpLayout();
@@ -50,6 +46,7 @@ public final class SpreadsheetView extends JPanel {
 
         table.setModel(model);
         table.setRowSelectionAllowed(false);
+        table.setAutoCreateColumnsFromModel(false); // Along with UpdateHeaderNameListener allow updating header name
         table.setModel(model);
         configTableHeader();
 
@@ -90,6 +87,16 @@ public final class SpreadsheetView extends JPanel {
         final JTableHeader header = table.getTableHeader();
         header.setBorder(new SoftBevelBorder(RAISED));
         header.setDefaultRenderer(new CustomTableCellRenderer(header));
+    }
+
+    private class UpdateHeaderNameListener implements TableModelListener {
+
+        @Override
+        public void tableChanged(TableModelEvent e) {
+            if (e != null && e.getFirstRow() == HEADER_ROW) {
+                spTable.repaint();
+            }
+        }
     }
 
     private static class CustomTableCellRenderer implements TableCellRenderer {

@@ -51,6 +51,7 @@ public class SpreadsheetModel implements TableModel, Serializable {
     @Action
     public void changeColumnName() {
         ChangeTableColumnsNameDialog.showDialog(tableColumnModel);
+        fireTableChanged(new TableModelEvent(this, TableModelEvent.HEADER_ROW, TableModelEvent.HEADER_ROW));
     }
 
     public void clear() {
