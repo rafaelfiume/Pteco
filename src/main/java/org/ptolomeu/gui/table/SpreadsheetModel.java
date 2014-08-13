@@ -19,9 +19,6 @@ public class SpreadsheetModel implements TableModel, Serializable {
 
     private static final int NUM_ROW = 5000;
 
-    /**
-     * Coordinates (x or y) added by the user in the spreadsheet.
-     */
     private final Map<GridIndex, Double> cellValues = new TreeMap();
 
     private final String[] columnName;

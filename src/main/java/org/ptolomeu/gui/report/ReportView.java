@@ -7,10 +7,6 @@ import javax.swing.JTextPane;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * 
- * @author Rafael Fiume
- */
 public final class ReportView extends JPanel {
 
     private JScrollPane scReport = new JScrollPane();

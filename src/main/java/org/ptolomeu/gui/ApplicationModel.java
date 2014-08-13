@@ -60,9 +60,6 @@ public class ApplicationModel {
         return chartModel;
     }
 
-    /**
-     * Sets the the linear regression type (currently, linear or non-linear).
-     */
     public void setSelectedRegressionType(Regression.Type selectedRegressionType) {
         this.selectedRegressionType = selectedRegressionType;
     }

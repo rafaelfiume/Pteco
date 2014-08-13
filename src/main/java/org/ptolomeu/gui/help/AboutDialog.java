@@ -81,7 +81,7 @@ public final class AboutDialog extends JDialog {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String link = (String) getValue(Action.SHORT_DESCRIPTION);
+            final String link = (String) getValue(Action.SHORT_DESCRIPTION);
             BareBonesBrowserLaunch.openURL(link);
         }
     }

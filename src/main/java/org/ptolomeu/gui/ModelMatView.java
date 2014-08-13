@@ -286,8 +286,6 @@ public class ModelMatView extends FrameView {
 
     /*
      * Utility method to retrieve Actions.
-     * 
-     * @see https://appframework.dev.java.net/intro/index.html
      */
     private Action getAction(Class actionsClass, Object actionsObject, String actionName) {
         return ModelMatApplication.getApplication().getContext().getActionMap(actionsClass, actionsObject).get(actionName);

@@ -5,12 +5,13 @@
  */
 package org.ptolomeu.gui;
 
-import org.ptolomeu.core.regression.LinearRegressionResult;
-import org.ptolomeu.core.regression.NonLinearRegressionResult;
+import org.ptolomeu.core.regression.AbstractRegressionResult;
 
 public interface Reporter {
 
-    void reportResult(LinearRegressionResult result);
+    /**
+     * Display the result of the mathematical modeling in the gui.
+     */
+    void reportResult(AbstractRegressionResult result);
 
-    void reportResult(NonLinearRegressionResult result);
 }

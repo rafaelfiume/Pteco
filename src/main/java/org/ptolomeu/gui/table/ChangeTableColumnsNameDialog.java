@@ -15,7 +15,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// TODO: Make this dialog request focus when it appears.
 public class ChangeTableColumnsNameDialog extends javax.swing.JDialog {
 
     private static ChangeTableColumnsNameDialog INSTANCE;
@@ -49,6 +48,7 @@ public class ChangeTableColumnsNameDialog extends javax.swing.JDialog {
         setTitle("Edit Column Name");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        setAutoRequestFocus(true);
 
         lCoordX.setText("Coord. X:");
         lCoordY.setText("Coord. Y:");
