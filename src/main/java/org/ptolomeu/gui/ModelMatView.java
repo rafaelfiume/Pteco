@@ -26,6 +26,7 @@ import org.ptolomeu.gui.actions.ShowNotYetImplementedMessageAction;
 import org.ptolomeu.gui.actions.ShowTipOfTheDayAction;
 import org.ptolomeu.gui.chart.ChartView;
 import org.ptolomeu.gui.report.ReportView;
+import org.ptolomeu.gui.table.SpreadsheetModel;
 import org.ptolomeu.gui.table.SpreadsheetView;
 
 import com.jgoodies.forms.layout.CellConstraints;
@@ -162,7 +163,7 @@ public class ModelMatView extends FrameView {
         bEdit.setFocusable(false);
         bEdit.setHorizontalTextPosition(CENTER);
         bEdit.setVerticalTextPosition(BOTTOM);
-        bEdit.setAction(getAction(SpreadsheetView.class, spreadsheet, "changeColumnName"));
+        bEdit.setAction(getAction(SpreadsheetModel.class, applicationModel.getSpreadsheetModel(), "changeColumnName"));
         bEdit.setText(null);
 
         bRun.setFocusable(false);

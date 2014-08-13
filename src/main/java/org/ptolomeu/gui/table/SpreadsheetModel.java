@@ -5,6 +5,8 @@
  */
 package org.ptolomeu.gui.table;
 
+import org.jdesktop.application.Action;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
@@ -13,6 +15,9 @@ import java.util.TreeMap;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 public class SpreadsheetModel implements TableModel, Serializable {
@@ -30,6 +35,8 @@ public class SpreadsheetModel implements TableModel, Serializable {
 
     private final EventListenerList listeners = new EventListenerList();
 
+    private final TableColumnModel tableColumnModel = new DefaultTableColumnModel();
+
     private int maxRow = 0;
 
     public SpreadsheetModel() {
@@ -40,6 +47,11 @@ public class SpreadsheetModel implements TableModel, Serializable {
     }
 
     // Actions ***************************************************************
+
+    @Action
+    public void changeColumnName() {
+        ChangeTableColumnsNameDialog.showDialog(tableColumnModel);
+    }
 
     public void clear() {
         for (int r = 0; r <= maxRow; r++) {
@@ -112,6 +124,14 @@ public class SpreadsheetModel implements TableModel, Serializable {
         return Collections.unmodifiableMap(cellValues);
     }
 
+    public TableColumnModel getTableColumnModel() {
+        return tableColumnModel;
+    }
+
+    TableModel getTableRowHeaderModel() {
+        return new TableRowHeaderModel(this);
+    }
+
     private void fireTableCellUpdated(final int row, final int column) {
         fireTableChanged(new TableModelEvent(this, row, row, column));
     }
@@ -136,6 +156,30 @@ public class SpreadsheetModel implements TableModel, Serializable {
 
     private boolean[] loadTableColumnIsEditable() {
         return new boolean[] { true, true, };
+    }
+
+    private static class TableRowHeaderModel extends AbstractTableModel {
+
+        private final TableModel tableModel;
+
+        private TableRowHeaderModel(TableModel tableModel) {
+            this.tableModel = tableModel;
+        }
+
+        @Override
+        public int getRowCount() {
+            return tableModel.getRowCount();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 1;
+        }
+
+        @Override
+        public Object getValueAt(final int row, final int column) {
+            return String.valueOf(row + 1);
+        }
     }
 
 }

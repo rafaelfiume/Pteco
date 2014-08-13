@@ -11,6 +11,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +20,7 @@ public class ChangeTableColumnsNameDialog extends javax.swing.JDialog {
 
     private static ChangeTableColumnsNameDialog INSTANCE;
 
-    private final JTableHeader tableHeader;
+    private final TableColumnModel tableColumnModel;
 
     private final JLabel lCoordX = new JLabel();
     private final JLabel lCoordY = new JLabel();
@@ -30,16 +31,16 @@ public class ChangeTableColumnsNameDialog extends javax.swing.JDialog {
     private final JButton bCancel = new JButton();
     private final JButton bOk = new JButton();
 
-    private ChangeTableColumnsNameDialog(JTableHeader tableHeader) {
+    private ChangeTableColumnsNameDialog(TableColumnModel tableColumnModel) {
         super((Frame) null, true);
-        this.tableHeader = tableHeader;
+        this.tableColumnModel = tableColumnModel;
         initComponents();
         setUpLayout();
     }
 
-    public synchronized static void showDialog(JTableHeader tableHeader) {
+    public synchronized static void showDialog(TableColumnModel tableColumnModel) {
         if (INSTANCE == null) {
-            INSTANCE = new ChangeTableColumnsNameDialog(tableHeader);
+            INSTANCE = new ChangeTableColumnsNameDialog(tableColumnModel);
         }
         INSTANCE.setVisible(true);
     }
@@ -114,7 +115,7 @@ public class ChangeTableColumnsNameDialog extends javax.swing.JDialog {
         }
 
         for (int i = 0; i < columnName.length; i++) {
-            tableHeader.getColumnModel().getColumn(i).setHeaderValue(columnName[i]);
+            tableColumnModel.getColumn(i).setHeaderValue(columnName[i]);
         }
         return true;
     }

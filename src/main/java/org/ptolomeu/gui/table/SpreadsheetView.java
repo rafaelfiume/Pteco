@@ -9,13 +9,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.SoftBevelBorder;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-
-import org.jdesktop.application.Action;
+import javax.swing.table.TableColumnModel;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -30,18 +28,27 @@ public final class SpreadsheetView extends JPanel {
 
     private final JTable tableRowHeader = new JTable();
 
-    private final JTable table = new JTable();
+    private final JTable table;
 
-    public SpreadsheetView(SpreadsheetModel model) {
+    public SpreadsheetView(final SpreadsheetModel model) {
+        this.table = new JTable() {
+            @Override
+            protected JTableHeader createDefaultTableHeader() {
+                final TableColumnModel tableColumnModel = model.getTableColumnModel();
+                setColumnModel(tableColumnModel);
+                return new JTableHeader(tableColumnModel);
+            }
+        };
+
         initComponents(model);
         setUpLayout();
     }
 
     private void initComponents(SpreadsheetModel model) {
-        tableRowHeader.setModel(new TableRowHeaderModel());
-        tableRowHeader.setAutoResizeMode(AUTO_RESIZE_OFF);
+        tableRowHeader.setModel(model.getTableRowHeaderModel());
         configTableRowHeader();
 
+        table.setModel(model);
         table.setRowSelectionAllowed(false);
         table.setModel(model);
         configTableHeader();
@@ -56,22 +63,12 @@ public final class SpreadsheetView extends JPanel {
         add(spTable, new CellConstraints().xy(1, 1));
     }
 
-    /*
-     * Action's supostamente devem ficar na model (ou PresentationModel). Porém #changeColumnModel
-     * parece estar melhor na view, já que a propriedade tableHeader, alvo desse método, faz parte
-     * da JTable (i.e. a view).
-     */
-    @Action
-    public void changeColumnName() {
-        ChangeTableColumnsNameDialog.showDialog(table.getTableHeader());
-    }
-
     private void configTableRowHeader() {
         final int COL_SIZE = 40;
 
         final TableRowHeaderCellRenderer renderer = new TableRowHeaderCellRenderer();
-
         tableRowHeader.setDefaultRenderer(String.class, renderer);
+        tableRowHeader.setAutoResizeMode(AUTO_RESIZE_OFF);
         tableRowHeader.setRowHeight(table.getRowHeight());
         tableRowHeader.setRowSelectionAllowed(false);
         tableRowHeader.setShowHorizontalLines(table.getShowHorizontalLines());
@@ -126,24 +123,6 @@ public final class SpreadsheetView extends JPanel {
             setBackground(backgroundColor);
             setValue(value);
             return this;
-        }
-    }
-
-    private class TableRowHeaderModel extends AbstractTableModel {
-
-        @Override
-        public int getRowCount() {
-            return table.getModel().getRowCount();
-        }
-
-        @Override
-        public int getColumnCount() {
-            return 1;
-        }
-
-        @Override
-        public Object getValueAt(final int row, final int column) {
-            return String.valueOf(row + 1);
         }
     }
 
