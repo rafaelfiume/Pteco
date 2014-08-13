@@ -1,11 +1,6 @@
 package org.ptolomeu.core.regression;
 
-import org.ptolomeu.core.regression.exception.CoordinateNumberException;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 final class RegressionUtils {
 
@@ -13,147 +8,73 @@ final class RegressionUtils {
         // Utility class
     }
 
-    static double sumX(final Map<GridIndex, Double> coordValues) {
+    static double sumX(List<Point> orderedPairs) {
         double somaDeX = 0.0;
-
-        for (GridIndex coord : coordValues.keySet()) {
-            if (coord.getColumnIndex() == 0) {
-                somaDeX += coordValues.get(coord);
-            }
+        for (Point pair : orderedPairs) {
+            somaDeX += pair.x();
         }
 
         return somaDeX;
     }
 
-    static double sumY(final Map<GridIndex, Double> coordValues) {
+    static double sumY(List<Point> orderedPairs) {
         double somaDeY = 0.0;
-
-        for (GridIndex coord : coordValues.keySet()) {
-            if (coord.getColumnIndex() == 1) {
-                somaDeY += coordValues.get(coord);
-            }
+        for (Point pair : orderedPairs) {
+            somaDeY += pair.y();
         }
 
         return somaDeY;
     }
 
-    static double sumXY(final Map<GridIndex, Double> coordValues) throws CoordinateNumberException {
-        int numCoordX = 0;
-        int numCoordY = 0;
+    static double sumXY(List<Point> orderedPairs) {
         double somaDeMultDeXY = 0.0;
-
-        final List<Double> listX = new ArrayList<>();
-        final List<Double> listY = new ArrayList<>();
-
-        for (GridIndex coord : coordValues.keySet()) {
-            if (coord.getColumnIndex() == 0) {
-                listX.add(coordValues.get(coord));
-                numCoordX++;
-                continue;
-
-            } else if (coord.getColumnIndex() == 1) {
-                listY.add(coordValues.get(coord));
-                numCoordY++;
-            }
-        }
-
-        if (numCoordX != numCoordY) {
-            throw new CoordinateNumberException();
-        }
-
-        final Iterator<Double> itX = listX.iterator();
-        final Iterator<Double> itY = listY.iterator();
-
-        while (itX.hasNext() && itY.hasNext()) {
-            final Double dX = itX.next();
-            final Double dY = itY.next();
-            somaDeMultDeXY += dX.doubleValue() * dY.doubleValue();
+        for (Point pair : orderedPairs) {
+            somaDeMultDeXY +=  pair.x() * pair.y();
         }
 
         return somaDeMultDeXY;
     }
 
-    static double sumX2(final Map<GridIndex, Double> coordValues) {
+    static double sumX2(List<Point> orderedPairs) {
         double somaDeX2 = 0.0;
-
-        for (GridIndex coord : coordValues.keySet()) {
-
-            if (coord.getColumnIndex() == 0) {
-                Double dX2 = coordValues.get(coord);
-                somaDeX2 += Math.pow(dX2.doubleValue(), 2);
-            }
+        for (Point pair : orderedPairs) {
+            somaDeX2 += Math.pow(pair.x(), 2);
         }
 
         return somaDeX2;
     }
 
-    static double sumY2(Map<GridIndex, Double> coordValues) {
+    static double sumY2(List<Point> orderedPairs) {
         double somaDeY2 = 0.0;
-
-        for (GridIndex coord : coordValues.keySet()) {
-
-            if (coord.getColumnIndex() == 1) {
-                Double dY2 = coordValues.get(coord);
-                somaDeY2 += Math.pow(dY2.doubleValue(), 2);
-            }
+        for (Point pair : orderedPairs) {
+            somaDeY2 += Math.pow(pair.y(), 2);
         }
 
         return somaDeY2;
     }
 
-    static double sumX3(final Map<GridIndex, Double> coordValues) {
+    static double sumX3(List<Point> orderedPairs) {
         double somaDeX3 = 0.0;
-
-        for (GridIndex coord : coordValues.keySet()) {
-
-            if (coord.getColumnIndex() == 0) {
-                Double dX3 = coordValues.get(coord);
-                somaDeX3 += Math.pow(dX3.doubleValue(), 3);
-            }
+        for (Point pair : orderedPairs) {
+            somaDeX3 += Math.pow(pair.x(), 3);
         }
 
         return somaDeX3;
     }
 
-    static double sumX4(final Map<GridIndex, Double> coordValues) {
+    static double sumX4(List<Point> orderedPairs) {
         double somaDeX4 = 0.0;
-
-        for (GridIndex coord : coordValues.keySet()) {
-
-            if (coord.getColumnIndex() == 0) {
-                Double dX4 = coordValues.get(coord);
-                somaDeX4 += Math.pow(dX4.doubleValue(), 4);
-            }
+        for (Point pair : orderedPairs) {
+            somaDeX4 += Math.pow(pair.x(), 4);
         }
 
         return somaDeX4;
     }
 
-    static double sumX2Y(final Map<GridIndex, Double> coordValues) {
+    static double sumX2Y(List<Point> orderedPairs) {
         double somaDeMultDeX2Y = 0.0;
-
-        List<Double> listX = new ArrayList<>();
-        List<Double> listY = new ArrayList<>();
-
-        for (GridIndex coord : coordValues.keySet()) {
-
-            if (coord.getColumnIndex() == 0) {
-                listX.add(coordValues.get(coord));
-                continue;
-
-            } else if (coord.getColumnIndex() == 1) {
-                listY.add(coordValues.get(coord));
-            }
-        }
-
-        final Iterator<Double> itX = listX.iterator();
-        final Iterator<Double> itY = listY.iterator();
-
-        while (itX.hasNext() && itY.hasNext()) {
-            Double dX = itX.next();
-            Double dY = itY.next();
-
-            somaDeMultDeX2Y += Math.pow(dX, 2) * dY;
+        for (Point pair : orderedPairs) {
+            somaDeMultDeX2Y += Math.pow(pair.x(), 2) * pair.y();
         }
 
         return somaDeMultDeX2Y;

@@ -64,7 +64,7 @@ public class ChartModel {
         final LineFunction2D lineFunction2D = new LineFunction2D(result.coefA(), result.coefB());
         final XYDataset xyDataset = sampleFunction2D(lineFunction2D, result.min(), result.max(), 500, "Fitted Regression Line");
 
-        chart.getXYPlot().setDataset(1, createRegressionDataset((XYSeriesCollection) xyDataset, result.getCartesianCoordinates()));
+        chart.getXYPlot().setDataset(1, createRegressionDataset((XYSeriesCollection) xyDataset, result.orderedPairs()));
         chart.setTitle("Linear Regression");
     }
 
@@ -72,7 +72,7 @@ public class ChartModel {
         final PowerFunction2D powerFunction2D = new PowerFunction2D(result.coefC(), 2);
         final XYDataset xyDataset = sampleFunction2D(powerFunction2D, result.min(), result.max(), 500, "Fitted Non-Regression Line");
 
-        chart.getXYPlot().setDataset(1, createRegressionDataset((XYSeriesCollection) xyDataset, result.getCartesianCoordinates()));
+        chart.getXYPlot().setDataset(1, createRegressionDataset((XYSeriesCollection) xyDataset, result.orderedPairs()));
         chart.setTitle("Non-Linear Regression");
     }
 
@@ -89,7 +89,7 @@ public class ChartModel {
         final XYSeries xySeries = new XYSeries("The points in 2D space");
 
         for (Point point : pointsIn2DSpace) {
-            xySeries.add(point.getX(), point.getY());
+            xySeries.add(point.x(), point.y());
         }
         regressionDataset.addSeries(xySeries);
         return regressionDataset;

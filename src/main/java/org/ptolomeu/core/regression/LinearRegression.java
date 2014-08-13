@@ -5,7 +5,7 @@
  */
 package org.ptolomeu.core.regression;
 
-import java.util.Map;
+import java.util.List;
 
 import org.ptolomeu.core.regression.exception.CoordinateNumberException;
 import org.ptolomeu.core.regression.exception.InsufficientDataException;
@@ -20,20 +20,18 @@ public class LinearRegression implements Regression {
 
     private static final int MIN_COORD = 3;
 
-    public LinearRegressionResult doRegression(final Map<GridIndex, Double> coordValues)
-            throws InsufficientDataException, CoordinateNumberException {
-
-        final int numCoord = (coordValues.size() / 2);
+    public LinearRegressionResult doRegression(List<Point> orderedPairs) {
+        final int numCoord = orderedPairs.size();
 
         if (numCoord < MIN_COORD) {
             throw new InsufficientDataException("Minimum number of coordinates to calculate linear regression is " + MIN_COORD);
         }
 
-        final double sumX = sumX(coordValues);
-        final double sumY = sumY(coordValues);
-        final double sumX2 = sumX2(coordValues);
-        final double sumY2 = sumY2(coordValues);
-        final double sumXY = sumXY(coordValues);
+        final double sumX = sumX(orderedPairs);
+        final double sumY = sumY(orderedPairs);
+        final double sumX2 = sumX2(orderedPairs);
+        final double sumY2 = sumY2(orderedPairs);
+        final double sumXY = sumXY(orderedPairs);
 
         final double coefB =
                 ((numCoord * sumXY) - (sumX * sumY))
@@ -44,7 +42,7 @@ public class LinearRegression implements Regression {
         final double coefDeCorrelacao = getCorrelationCoefficient(numCoord, sumX, sumY, sumX2, sumY2, sumXY);
         final double coefDeDeterminacao = getDeterminationCoefficient(coefDeCorrelacao);
 
-        return new LinearRegressionResult(coefA, coefB, coefDeCorrelacao, coefDeDeterminacao, coordValues);
+        return new LinearRegressionResult(coefA, coefB, coefDeCorrelacao, coefDeDeterminacao, orderedPairs);
     }
 
     /**

@@ -6,6 +6,8 @@ import org.junit.rules.ExpectedException;
 import org.ptolomeu.core.regression.exception.CoordinateNumberException;
 import org.ptolomeu.core.regression.exception.InsufficientDataException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -18,19 +20,16 @@ public class NonLinearRegressionTest {
 
     private final NonLinearRegression regression = new NonLinearRegression();
 
-    private Map<GridIndex, Double> coordinates = new TreeMap() {
+    private List<Point> coordinates = new ArrayList() {
         {
-            put(new GridIndex(0, 0), -4.0); // <- x
-            put(new GridIndex(0, 1), 6.0);  // <- y
-            put(new GridIndex(3, 0), 4.0);  // <- x
-            put(new GridIndex(3, 1), 10.0); // <- y
-            put(new GridIndex(7, 0), -5.0); // <- x
-            put(new GridIndex(7, 1), 8.0);  // <- y
+            add(new Point(-4.0, 6.0));
+            add(new Point(4.0, 10.0));
+            add(new Point(-5.0, 8.0));
         }
     };
 
     @Test
-    public void doRegression() throws Exception {
+    public void doRegression() {
         NonLinearRegressionResult result = regression.doRegression(coordinates);
 
         assertTrue(result.coefA() == 3.5555555555555554);
@@ -39,18 +38,17 @@ public class NonLinearRegressionTest {
     }
 
     @Test
-    public void insufficientData() throws InsufficientDataException, CoordinateNumberException {
+    public void insufficientData() {
         thrown.expect(InsufficientDataException.class);
         thrown.expectMessage("Minimum number of coordinates to calculate linear regression is 3");
 
         regression.doRegression(withNotEnoughCoordinates());
     }
 
-    private Map<GridIndex, Double> withNotEnoughCoordinates() {
-        return new TreeMap() {
+    private List<Point> withNotEnoughCoordinates() {
+        return new ArrayList() {
             {
-                put(new GridIndex(0, 0), -4.0); // <- x
-                put(new GridIndex(0, 1), 6.0);  // <- y
+                add(new Point(-4.0, 6.0));
             }
         };
     }

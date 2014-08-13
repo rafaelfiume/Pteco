@@ -26,7 +26,6 @@ public class ExceptionNotifier {
     private static final Logger LOG = Logger.getLogger(ExceptionNotifier.class.getName());
 
     private static final String COORDINATE_NUMBER_EXCEPTION_TITLE = "Missing Coordinate (x, y)";
-    private static final String COORDINATE_NUMBER_EXCEPTION_MESSAGE = "Please, type a entire coordinate (x, y)";
 
     private static final String INSUFFICIENT_DATA_EXCEPTION_TITLE = "Insufficient Coordinate Number";
     private static final String INSUFFICIENT_DATA_EXCEPTION_MESSAGE = "Please, provide the necessary data.";
@@ -46,12 +45,12 @@ public class ExceptionNotifier {
         LOG.log(Level.INFO, "", cause);
     }
 
-    private static void notify(CoordinateNumberException coordinateNumberException) {
+    private static void notify(CoordinateNumberException e) {
         JOptionPane.showMessageDialog(
-                null, COORDINATE_NUMBER_EXCEPTION_MESSAGE, COORDINATE_NUMBER_EXCEPTION_TITLE, JOptionPane.INFORMATION_MESSAGE);
+                null, e.getMessage(), COORDINATE_NUMBER_EXCEPTION_TITLE, JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private static void notify(InsufficientDataException insufficientDataException) {
+    private static void notify(InsufficientDataException e) {
         JOptionPane.showMessageDialog(
                 null, INSUFFICIENT_DATA_EXCEPTION_MESSAGE, INSUFFICIENT_DATA_EXCEPTION_TITLE, JOptionPane.INFORMATION_MESSAGE);
     }

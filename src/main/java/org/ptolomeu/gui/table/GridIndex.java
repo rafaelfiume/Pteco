@@ -3,18 +3,12 @@
  * 
  * Created on 14/07/2007, 04:22:50
  */
-package org.ptolomeu.core.regression;
+package org.ptolomeu.gui.table;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/**
- * Maps a single coordinate, x or y, in a spreadsheet.
- *
- * TODO It's necessary to diferenciate this class from Point.
- * TODO Move it to table package
- */
 public class GridIndex implements Comparable<GridIndex> {
 
     private final int rowIndex;

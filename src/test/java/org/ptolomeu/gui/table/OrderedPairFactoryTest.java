@@ -3,10 +3,10 @@ package org.ptolomeu.gui.table;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.ptolomeu.core.regression.GridIndex;
 import org.ptolomeu.core.regression.Point;
 import org.ptolomeu.core.regression.exception.CoordinateNumberException;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -21,7 +21,7 @@ public class OrderedPairFactoryTest {
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
-    private TreeMap<GridIndex, Double> gridValues = new TreeMap() {
+    private Map<GridIndex, Double> gridValues = new HashMap() {
         {
             // 1st pair -------------------------------
             put(new GridIndex(0, 0), -4.0); // <- x
@@ -39,7 +39,7 @@ public class OrderedPairFactoryTest {
     };
 
     @Test
-    public void getCartesianCoordinates() throws Exception {
+    public void getCartesianCoordinates() {
         List<Point> coordinates = OrderedPairFactory.getOrderedPairs(gridValues);
 
         assertThat(coordinates.size(), is(equalTo(3)));
@@ -76,7 +76,7 @@ public class OrderedPairFactoryTest {
         assertThat(empty.size(), is(equalTo(0)));
     }
 
-    private TreeMap<GridIndex, Double> whenGridHasMissingAbscissa() {
+    private Map<GridIndex, Double> whenGridHasMissingAbscissa() {
         return new TreeMap() {
             {
                 // 1st pair -------------------------------
@@ -91,7 +91,7 @@ public class OrderedPairFactoryTest {
         };
     }
 
-    private TreeMap<GridIndex, Double> whenGridHasMissingOrdinate() {
+    private Map<GridIndex, Double> whenGridHasMissingOrdinate() {
         return new TreeMap() {
             {
                 // 1st pair -------------------------------
@@ -106,7 +106,7 @@ public class OrderedPairFactoryTest {
         };
     }
 
-    private TreeMap<GridIndex, Double> whenGridHasInvalidPairs() {
+    private Map<GridIndex, Double> whenGridHasInvalidPairs() {
         return new TreeMap() {
             {
                 // 1st pair -------------------------------

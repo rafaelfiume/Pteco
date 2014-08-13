@@ -18,7 +18,7 @@ public class RegressionFactoryTest {
     private final RegressionFactory regressionFactory = RegressionFactory.getInstance();
 
     @Test
-    public void invalidArgument() throws Exception {
+    public void invalidArgument() {
         thrown.expect(NullPointerException.class);
         regressionFactory.getRegression(null);
     }

@@ -2,27 +2,23 @@ package org.ptolomeu.core.regression;
 
 import org.junit.Test;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
 public class RegressionUtilsTest {
 
-    // TODO Try this with other implementation that TreeMap. It will fail. Consider changing API to expect TreeMap...
-    private Map<GridIndex, Double> coordinates = new TreeMap() {
+    private List<Point> coordinates = new ArrayList() {
         {
-            put(new GridIndex(0, 0), -4.0); // <- x
-            put(new GridIndex(0, 1), 6.0);  // <- y
-            put(new GridIndex(3, 0), 4.0);  // <- x
-            put(new GridIndex(3, 1), 10.0); // <- y
-            put(new GridIndex(7, 0), -5.0); // <- x
-            put(new GridIndex(7, 1), 8.0);  // <- y
+            add(new Point(-4.0, 6.0));
+            add(new Point(-5.0, 8.0));
+            add(new Point(4.0, 10.0));
         }
     };
 
     @Test
-    public void sumX() throws Exception {
+    public void sumX() {
         assertTrue(RegressionUtils.sumX(coordinates) == -5);
     }
 

@@ -5,7 +5,7 @@
  */
 package org.ptolomeu.core.regression;
 
-import java.util.Map;
+import java.util.List;
 
 public class NonLinearRegressionResult extends AbstractRegressionResult {
 
@@ -17,13 +17,11 @@ public class NonLinearRegressionResult extends AbstractRegressionResult {
 
     private final double coefC;
 
-    private final Map<GridIndex, Double> coordValues;
-
-    public NonLinearRegressionResult(double coefA, double coefB, double coefC, Map<GridIndex,Double> coordValues) {
+    public NonLinearRegressionResult(double coefA, double coefB, double coefC, List<Point> orderedPairs) {
+        super(orderedPairs);
         this.coefA = coefA;
         this.coefB = coefB;
         this.coefC = coefC;
-        this.coordValues = coordValues;
     }
 
     public double coefA() {
@@ -41,11 +39,6 @@ public class NonLinearRegressionResult extends AbstractRegressionResult {
     public String toString() {
         return new StringBuilder("Non Linear Regression Result: ")
                 .append(coefA).append("\t").append(coefB).append("\t").append(coefC).toString();
-    }
-
-    @Override
-    protected Map<GridIndex, Double> coordValues() {
-        return coordValues;
     }
 
 }

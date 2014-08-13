@@ -8,39 +8,41 @@ package org.ptolomeu.core.regression;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
+import static java.util.Collections.min;
+import static java.util.Collections.unmodifiableList;
 
 public abstract class AbstractRegressionResult {
 
+    private final List<Point> orderedPairs;
+
+    private final List<Double> xys;
+
+    protected AbstractRegressionResult(List<Point> orderedPairs) {
+        this.orderedPairs = unmodifiableList(orderedPairs);
+        this.xys = extractValuesFrom(orderedPairs);
+    }
+
+    public final List<Point> orderedPairs() {
+        return orderedPairs;
+    }
+
     public double min() {
-        return Collections.min(coordValues().values());
+        return Collections.min(xys);
     }
 
     public double max() {
-        return Collections.max(coordValues().values());
+        return Collections.max(xys);
     }
 
-    public List<Point> getCartesianCoordinates() {
-        Set<GridIndex> indexes = coordValues().keySet();
-        final List<Point> points = new ArrayList<>(15);
-
-        for (GridIndex index : indexes) {
-            if (index.getColumnIndex() != 0) {
-                continue;
-            }
-
-            final Double x = coordValues().get(index);
-            final Double y = coordValues().get(new GridIndex(index.getRowIndex(), index.getColumnIndex() + 1));
-
-            points.add(new Point(x, y));
+    private List<Double> extractValuesFrom(List<Point> orderedPairs) {
+        final List<Double> xys = new ArrayList<>();
+        for (Point pair : orderedPairs) {
+            xys.add(pair.x());
+            xys.add(pair.y());
         }
 
-        return points;
+        return unmodifiableList(xys);
     }
 
-    /**
-     * Os valores de acordo com sua coordenada (x, y).
-     */
-    protected abstract Map<GridIndex, Double> coordValues();
 }

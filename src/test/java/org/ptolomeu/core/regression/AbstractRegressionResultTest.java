@@ -2,9 +2,8 @@ package org.ptolomeu.core.regression;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
@@ -13,26 +12,34 @@ import static org.junit.Assert.*;
 
 public class AbstractRegressionResultTest {
 
-    private Map<GridIndex, Double> coordinates = new TreeMap() {
+    private List<Point> coordinates = new ArrayList() {
         {
-            put(new GridIndex(0, 0), -4.0); // <- x
-            put(new GridIndex(0, 1), 6.0);  // <- y
-            put(new GridIndex(3, 0), 4.0);  // <- x
-            put(new GridIndex(3, 1), 10.0); // <- y
-            put(new GridIndex(7, 0), -5.0); // <- x
-            put(new GridIndex(7, 1), 8.0);  // <- y
+            add(new Point(-4.0, 6.0));
+            add(new Point(4.0, 10.0));
+            add(new Point(-5.0, 8.0));
         }
     };
 
     private AbstractRegressionResult underTest = new LinearRegressionResult(0, 0, 0, 0, coordinates);
 
     @Test
-    public void getCartesianCoordinates() throws Exception {
-        List<Point> cartesianCoordinates = underTest.getCartesianCoordinates();
+    public void getCartesianCoordinates() {
+        List<Point> cartesianCoordinates = underTest.orderedPairs();
 
         assertThat(cartesianCoordinates.size(), is(equalTo(3)));
         assertThat(cartesianCoordinates, hasItem(new Point(-4.0, 6.0)));
         assertThat(cartesianCoordinates, hasItem(new Point(4.0, 10.0)));
         assertThat(cartesianCoordinates, hasItem(new Point(-5.0, 8.0)));
     }
+
+    @Test
+    public void min() {
+        assertThat(underTest.min(), is(equalTo(-5.0)));
+    }
+
+    @Test
+    public void max() {
+        assertThat(underTest.max(), is(equalTo(10.0)));
+    }
+
 }

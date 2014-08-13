@@ -13,6 +13,7 @@ import org.ptolomeu.core.regression.exception.CoordinateNumberException;
 import org.ptolomeu.core.regression.exception.InsufficientDataException;
 import org.ptolomeu.gui.chart.ChartModel;
 import org.ptolomeu.gui.report.ReportModel;
+import org.ptolomeu.gui.table.OrderedPairFactory;
 import org.ptolomeu.gui.table.SpreadsheetModel;
 
 /**
@@ -78,7 +79,7 @@ public class ApplicationModel {
         protected AbstractRegressionResult doInBackground() throws CoordinateNumberException, InsufficientDataException {
             return RegressionFactory.getInstance()
                     .getRegression(selectedRegressionType)
-                    .doRegression(spreadsheetModel.getCoordValues());
+                    .doRegression(OrderedPairFactory.getOrderedPairs(spreadsheetModel.getCellValues()));
         }
 
         @Override

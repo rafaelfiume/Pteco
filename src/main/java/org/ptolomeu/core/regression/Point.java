@@ -14,14 +14,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 public class Point implements Comparable<Point> {
 
-    /**
-     * The x coordinate.
-     */
     private final Double x;
 
-    /**
-     * The y coordinate.
-     */
     private final Double y;
 
     public Point(Double x, Double y) {
@@ -29,11 +23,11 @@ public class Point implements Comparable<Point> {
         this.y = y;
     }
 
-    public Double getX() {
+    public Double x() {
         return x;
     }
 
-    public Double getY() {
+    public Double y() {
         return y;
     }
 

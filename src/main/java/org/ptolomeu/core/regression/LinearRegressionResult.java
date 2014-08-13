@@ -5,7 +5,7 @@
  */
 package org.ptolomeu.core.regression;
 
-import java.util.Map;
+import java.util.List;
 
 public final class LinearRegressionResult extends AbstractRegressionResult {
 
@@ -15,14 +15,13 @@ public final class LinearRegressionResult extends AbstractRegressionResult {
     private final double coefB;
     private final double coefDeCorrelacao;
     private final double coefDeDeterminacao;
-    private final Map<GridIndex, Double> coordValues;
 
-    public LinearRegressionResult(double coefA, double coefB, double coefDeCorrelacao, double coefDeDeterminacao, Map<GridIndex, Double> coordValues) {
+    public LinearRegressionResult(double coefA, double coefB, double coefDeCorrelacao, double coefDeDeterminacao, List<Point> orderedPairs) {
+        super(orderedPairs);
         this.coefA = coefA;
         this.coefB = coefB;
         this.coefDeCorrelacao = coefDeCorrelacao;
         this.coefDeDeterminacao = coefDeDeterminacao;
-        this.coordValues = coordValues;
     }
 
     public double coefA() {
@@ -44,11 +43,6 @@ public final class LinearRegressionResult extends AbstractRegressionResult {
     public String toString() {
         return new StringBuilder("Linear Regression: ")
                 .append(coefA).append("\t").append(coefB).append("\t").append(coefDeCorrelacao).append("\t").append(coefDeDeterminacao).toString();
-    }
-
-    @Override
-    protected Map<GridIndex, Double> coordValues() {
-        return coordValues;
     }
 
 }

@@ -5,10 +5,7 @@
  */
 package org.ptolomeu.core.regression;
 
-import org.ptolomeu.core.regression.exception.CoordinateNumberException;
-import org.ptolomeu.core.regression.exception.InsufficientDataException;
-
-import java.util.Map;
+import java.util.List;
 
 public interface Regression {
 
@@ -16,8 +13,6 @@ public interface Regression {
         LINEAR, NON_LINEAR;
     }
 
-    // TODO Replace GridIndex by Point
-    AbstractRegressionResult doRegression(Map<GridIndex, Double> coordValues)
-            throws InsufficientDataException, CoordinateNumberException;
+    AbstractRegressionResult doRegression(List<Point> orderedPairs);
 
 }
