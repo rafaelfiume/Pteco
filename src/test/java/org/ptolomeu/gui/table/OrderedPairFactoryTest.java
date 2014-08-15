@@ -21,26 +21,26 @@ public class OrderedPairFactoryTest {
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
-    private Map<GridIndex, Double> gridValues = new HashMap() {
+    private Map<CellIndex, Double> cellValues = new HashMap() {
         {
             // 1st pair -------------------------------
-            put(new GridIndex(0, 0), -4.0); // <- x
-            put(new GridIndex(0, 1), 6.0);  // <- y
+            put(new CellIndex(0, 0), -4.0); // <- x
+            put(new CellIndex(0, 1), 6.0);  // <- y
 
             // 2nd pair -------------------------------
-            put(new GridIndex(3, 0), 4.0);  // <- x
-            put(new GridIndex(3, 1), 10.0); // <- y
+            put(new CellIndex(3, 0), 4.0);  // <- x
+            put(new CellIndex(3, 1), 10.0); // <- y
 
             // 3rd pair -------------------------------
-            put(new GridIndex(7, 0), -5.0); // <- x
-            put(new GridIndex(7, 1), 8.0);  // <- y
+            put(new CellIndex(7, 0), -5.0); // <- x
+            put(new CellIndex(7, 1), 8.0);  // <- y
             //-----------------------------------------
         }
     };
 
     @Test
-    public void getCartesianCoordinates() {
-        List<Point> coordinates = OrderedPairFactory.getOrderedPairs(gridValues);
+    public void getOrderedPairs() {
+        List<Point> coordinates = OrderedPairFactory.getOrderedPairs(cellValues);
 
         assertThat(coordinates.size(), is(equalTo(3)));
         assertThat(coordinates, hasItem(new Point(-4.0, 6.0)));
@@ -52,21 +52,21 @@ public class OrderedPairFactoryTest {
     public void missingAbscissa() {
         thrown.expect(CoordinateNumberException.class);
         thrown.expectMessage("Missing abscissa (?, 6.0)");
-        OrderedPairFactory.getOrderedPairs(whenGridHasMissingAbscissa());
+        OrderedPairFactory.getOrderedPairs(whenRowHasMissingAbscissa());
     }
 
     @Test
     public void missingOrdinate() {
         thrown.expect(CoordinateNumberException.class);
         thrown.expectMessage("Missing ordinate (4.0, ?)");
-        OrderedPairFactory.getOrderedPairs(whenGridHasMissingOrdinate());
+        OrderedPairFactory.getOrderedPairs(whenRowHasMissingOrdinate());
     }
 
     @Test
     public void invalidPairs() {
         thrown.expect(CoordinateNumberException.class);
         thrown.expectMessage("Missing abscissa (?, 6.0)");
-        OrderedPairFactory.getOrderedPairs(whenGridHasInvalidPairs());
+        OrderedPairFactory.getOrderedPairs(whenRowHasInvalidPair());
     }
 
     @Test
@@ -76,52 +76,52 @@ public class OrderedPairFactoryTest {
         assertThat(empty.size(), is(equalTo(0)));
     }
 
-    private Map<GridIndex, Double> whenGridHasMissingAbscissa() {
+    private Map<CellIndex, Double> whenRowHasMissingAbscissa() {
         return new TreeMap() {
             {
                 // 1st pair -------------------------------
-                put(new GridIndex(0, 0), -4.0); // <- x
-                put(new GridIndex(0, 1), 6.0);  // <- y
+                put(new CellIndex(0, 0), -4.0); // <- x
+                put(new CellIndex(0, 1), 6.0);  // <- y
 
                 // 2nd pair -------------------------------
                                                 // <- x ???
-                put(new GridIndex(1, 1), 6.0);  // <- y
+                put(new CellIndex(1, 1), 6.0);  // <- y
                 //-----------------------------------------
             }
         };
     }
 
-    private Map<GridIndex, Double> whenGridHasMissingOrdinate() {
+    private Map<CellIndex, Double> whenRowHasMissingOrdinate() {
         return new TreeMap() {
             {
                 // 1st pair -------------------------------
-                put(new GridIndex(0, 0), -4.0); // <- x
-                put(new GridIndex(0, 1), 6.0);  // <- y
+                put(new CellIndex(0, 0), -4.0); // <- x
+                put(new CellIndex(0, 1), 6.0);  // <- y
 
                 // 2nd pair -------------------------------
-                put(new GridIndex(3, 0), 4.0);  // <- x
+                put(new CellIndex(3, 0), 4.0);  // <- x
                                                 // <- y ???
                 //-----------------------------------------
             }
         };
     }
 
-    private Map<GridIndex, Double> whenGridHasInvalidPairs() {
+    private Map<CellIndex, Double> whenRowHasInvalidPair() {
         return new TreeMap() {
             {
                 // 1st pair -------------------------------
                                                 // <- x ???
-                put(new GridIndex(0, 1), 6.0);  // <- y
+                put(new CellIndex(0, 1), 6.0);  // <- y
 
                 // 2nd pair -------------------------------
-                put(new GridIndex(3, 0), 4.0);  // <- x
+                put(new CellIndex(3, 0), 4.0);  // <- x
                                                 // <- y ???
                 //-----------------------------------------
             }
         };
     }
 
-    private TreeMap<GridIndex, Double> noData() {
+    private Map<CellIndex, Double> noData() {
         return new TreeMap<>();
     }
 

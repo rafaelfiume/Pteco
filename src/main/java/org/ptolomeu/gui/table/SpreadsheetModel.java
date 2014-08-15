@@ -24,7 +24,7 @@ public class SpreadsheetModel implements TableModel, Serializable {
 
     private static final int NUM_ROW = 5000;
 
-    private final Map<GridIndex, Double> cellValues = new TreeMap();
+    private final Map<CellIndex, Double> cellValues = new TreeMap();
 
     private final String[] columnName;
     private final int numColumn;
@@ -92,16 +92,16 @@ public class SpreadsheetModel implements TableModel, Serializable {
 
     @Override
     public Object getValueAt(final int rowIndex, final int columnIndex) {
-        return cellValues.get(new GridIndex(rowIndex, columnIndex));
+        return cellValues.get(new CellIndex(rowIndex, columnIndex));
     }
 
     @Override
     public void setValueAt(Object aValue, final int rowIndex, int columnIndex) {
         if (aValue == null) {
-            cellValues.remove(new GridIndex(rowIndex, columnIndex));
+            cellValues.remove(new CellIndex(rowIndex, columnIndex));
             return;
         }
-        cellValues.put(new GridIndex(rowIndex, columnIndex), (Double) aValue);
+        cellValues.put(new CellIndex(rowIndex, columnIndex), (Double) aValue);
 
         maxRow = Math.max(maxRow, rowIndex);
         fireTableCellUpdated(rowIndex, columnIndex);
@@ -121,7 +121,7 @@ public class SpreadsheetModel implements TableModel, Serializable {
 
     // Others helpful methods ************************************************
 
-    public Map<GridIndex, Double> getCellValues() {
+    public Map<CellIndex, Double> getCellValues() {
         return Collections.unmodifiableMap(cellValues);
     }
 

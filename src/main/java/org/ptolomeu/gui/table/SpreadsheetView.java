@@ -47,7 +47,6 @@ public final class SpreadsheetView extends JPanel {
         table.setModel(model);
         table.setRowSelectionAllowed(false);
         table.setAutoCreateColumnsFromModel(false); // Along with UpdateHeaderNameListener allow updating header name
-        table.setModel(model);
         configTableHeader();
 
         spTable.setBorder(null);

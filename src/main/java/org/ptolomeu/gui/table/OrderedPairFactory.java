@@ -22,16 +22,14 @@ public final class OrderedPairFactory {
     }
 
     /**
-     * Returns a list of ordered pair. <p/>
-     *
-     * It expects ordered gridValues. If it's not ordered, this method behaves unpredictably.
+     * Returns a list of ordered pair.
      */
-    public static List<Point> getOrderedPairs(Map<GridIndex, Double> gridValues) {
-        final Set<GridIndex> indexes = gridValues.keySet();
+    public static List<Point> getOrderedPairs(Map<CellIndex, Double> cellValues) {
+        final Set<CellIndex> indexes = cellValues.keySet();
         final Map<Integer, MutablePoint> rows = new HashMap<>();
 
-        for (GridIndex index : indexes) {
-            final Double value = gridValues.get(index);
+        for (CellIndex index : indexes) {
+            final Double value = cellValues.get(index);
             final int rowIndex = index.getRowIndex();
 
             if (rows.containsKey(rowIndex)) {
@@ -41,7 +39,7 @@ public final class OrderedPairFactory {
             }
         }
 
-        final List<Point> orderedPairs = new ArrayList<>(gridValues.size());
+        final List<Point> orderedPairs = new ArrayList<>(cellValues.size());
         for (MutablePoint row : rows.values()) {
             orderedPairs.add(row.newPoint());
         }
@@ -55,7 +53,7 @@ public final class OrderedPairFactory {
 
         private Double y;
 
-        MutablePoint update(GridIndex index, Double value) {
+        MutablePoint update(CellIndex index, Double value) {
             if (abscissaIn(index)) {
                 x = value;
 
@@ -72,11 +70,11 @@ public final class OrderedPairFactory {
             return new Point(x, y);
         }
 
-        private boolean abscissaIn(GridIndex index) {
+        private boolean abscissaIn(CellIndex index) {
             return index.getColumnIndex()  == 0;
         }
 
-        private boolean ordinateIn(GridIndex index) {
+        private boolean ordinateIn(CellIndex index) {
             return index.getColumnIndex()  == 1;
         }
 

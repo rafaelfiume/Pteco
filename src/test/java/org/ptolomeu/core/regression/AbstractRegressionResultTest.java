@@ -20,16 +20,16 @@ public class AbstractRegressionResultTest {
         }
     };
 
-    private AbstractRegressionResult underTest = new LinearRegressionResult(0, 0, 0, 0, coordinates);
+    private AbstractRegressionResult underTest = new AbstractRegressionResult(coordinates) {};
 
     @Test
     public void getCartesianCoordinates() {
-        List<Point> cartesianCoordinates = underTest.orderedPairs();
+        List<Point> coordinates = underTest.orderedPairs();
 
-        assertThat(cartesianCoordinates.size(), is(equalTo(3)));
-        assertThat(cartesianCoordinates, hasItem(new Point(-4.0, 6.0)));
-        assertThat(cartesianCoordinates, hasItem(new Point(4.0, 10.0)));
-        assertThat(cartesianCoordinates, hasItem(new Point(-5.0, 8.0)));
+        assertThat(coordinates.size(), is(equalTo(3)));
+        assertThat(coordinates, hasItem(new Point(-4.0, 6.0)));
+        assertThat(coordinates, hasItem(new Point(4.0, 10.0)));
+        assertThat(coordinates, hasItem(new Point(-5.0, 8.0)));
     }
 
     @Test

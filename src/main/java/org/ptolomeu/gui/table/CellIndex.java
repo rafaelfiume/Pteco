@@ -1,6 +1,5 @@
 /*
- * Point.java
- * 
+ *
  * Created on 14/07/2007, 04:22:50
  */
 package org.ptolomeu.gui.table;
@@ -9,13 +8,13 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class GridIndex implements Comparable<GridIndex> {
+public class CellIndex implements Comparable<CellIndex> {
 
     private final int rowIndex;
 
     private final int columnIndex;
 
-    public GridIndex(int rowIndex, int columnIndex) {
+    public CellIndex(int rowIndex, int columnIndex) {
         this.rowIndex = rowIndex;
         this.columnIndex = columnIndex;
     }
@@ -29,7 +28,7 @@ public class GridIndex implements Comparable<GridIndex> {
     }
 
     @Override
-    public int compareTo(final GridIndex other) {
+    public int compareTo(final CellIndex other) {
         return new CompareToBuilder().append(rowIndex, other.rowIndex).append(columnIndex, other.columnIndex).toComparison();
     }
 
@@ -43,10 +42,10 @@ public class GridIndex implements Comparable<GridIndex> {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof GridIndex)) {
+        if (!(other instanceof CellIndex)) {
             return false;
         }
-        final GridIndex castOther = (GridIndex) other;
+        final CellIndex castOther = (CellIndex) other;
         return new EqualsBuilder().append(rowIndex, castOther.rowIndex).append(columnIndex, castOther.columnIndex).isEquals();
     }
 }
