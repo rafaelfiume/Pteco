@@ -1,7 +1,7 @@
 ## An Example of Use
 
 A company could use Pteco to try to find some relation between a product’s price and its market-share. 
-The relationship between this two variables could indicate that sales increase when the product’s price decrease and vice-versa, providing valuable information to define the company’s marketing strategy.
+The relationship between this two variables could indicate that sales increase when the product’s price decreases and vice-versa, providing valuable information to define the company’s marketing strategy.
 
 ## Linear Regression 
  ![app](docs/modelmat-0-4_1.png)
